@@ -1,4 +1,4 @@
-var tile = {
+const tile = {
   /*
    * 1. Dans js/tile.js, on va créer un objet tile responsable de la création des tuiles. On peut créer une méthode create chargé de créer une tuile.
    */
@@ -62,8 +62,8 @@ var tile = {
 				arrayTile[value.sign] = { name: value.name, perm: value.permission};
 			});
 
-		let typeTile = arrayTile[char];
-		return typeTile;
+
+		return arrayTile[char];
 
   },
 };

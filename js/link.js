@@ -4,7 +4,8 @@ const Link = {
 			'left': 113,
 			'right': 100,
 			'up': 122,
-			'down': 115
+			'down': 115,
+			'arrow': 32
 		};
 		Link.create(left, top);
 		Link.movesStep = App.mainsize;
@@ -25,6 +26,7 @@ const Link = {
 		let $top = Link.link.position().top;
   	let $left = Link.link.position().left;
     $(window).on('keypress', function(e){
+    	//console.log(e.which);
       switch(e.which) {
         case Link.keys.right:
          //go right
@@ -50,6 +52,9 @@ const Link = {
               Link.link.css('top', $top += Link.movesStep);
             }
             break;
+		  case Link.keys.arrow:
+		  	Weapon.create();
+		  	break;
         default:
         	console.log('key undefined');
           break;
@@ -58,7 +63,7 @@ const Link = {
 	},
 	animateLink: function($top, $left){
 		Link.link.animate({
-			top: '-='+ App.mainsize*2
+			top: '-='+ App.mainsize * 2
 		},{
 			step: function(){
 				if(App.getElement($top, $left + Link.movesStep + App.mainsize).hasClass('allowed')){
@@ -66,5 +71,8 @@ const Link = {
 				}
 			}
 		})
+	},
+	throwArrows: function(){
+
 	}
 }

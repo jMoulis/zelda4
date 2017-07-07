@@ -6,6 +6,7 @@ const Monster = {
 		Monster.color = color;
 		Monster.create(Monster.top, Monster.left, Monster.color);
 		Monster.animationMonster(Monster.monster);
+		Monster.target = $('.link');
 	},
 	create: function(){
 		console.log('Monstre Création');
@@ -25,54 +26,61 @@ const Monster = {
 		};
 		return Monster.monster;
 	},
+
+
+	/**
+     * TODO: Set random moves to monster
+     * add head turns
+     * add css sprite
+     */
 	animationMonster: function(monster){
 		monster
 		.animate({
-			left: '+='+ App.mainsize*2
+			left: '+='+ App.mainsize * 2
 		},{
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(currentStep, fx, monster);
+				App.controleColisionAction(Monster.target, currentStep, fx, monster);
 			}
 		})
-		.animate({left: '-='+ App.mainsize*2}, {
+		.animate({left: '-='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(currentStep, fx, monster);
+				App.controleColisionAction(Monster.target, currentStep, fx, monster);
 			}
 		})
-		.animate({top: '-='+ App.mainsize*2}, {
+		.animate({top: '-='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(currentStep, fx, monster);
+				App.controleColisionAction(Monster.target, currentStep, fx, monster);
 			}
 		})
-		.animate({top: '+='+ App.mainsize*2}, {
+		.animate({top: '+='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(currentStep, fx, monster);
+				App.controleColisionAction(Monster.target, currentStep, fx, monster);
 			}
 		})
-		.animate({left: '-='+ App.mainsize*2}, {
+		.animate({left: '-='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(currentStep, fx, monster);
+				App.controleColisionAction(Monster.target, currentStep, fx, monster);
 			}
 		})
-		.animate({left: '+='+ App.mainsize*2}, {
+		.animate({left: '+='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(currentStep, fx, monster);
+				App.controleColisionAction(Monster.target, currentStep, fx, monster);
 			}
 		})
-		.animate({top: '+='+ App.mainsize*2}, {
+		.animate({top: '+='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(currentStep, fx, monster);
+				App.controleColisionAction(Monster.target, currentStep, fx, monster);
 			}
 		})
-		.animate({top: '-='+ App.mainsize*2},{duration: 1000, step: function(currentStep, fx){
-			App.controleColisionAction(currentStep, fx, monster);
+		.animate({top: '-='+ App.mainsize * 2},{duration: 1000, step: function(currentStep, fx){
+			App.controleColisionAction(Monster.target, currentStep, fx, monster);
 		}, complete: function(){Monster.animationMonster(monster)}})
 	}
 };
