@@ -1,16 +1,11 @@
+"use strict";
 const Monster = {
-	init: function(top, left, color, id){
-		Monster.id = id;
-		Monster.top = top;
-		Monster.left = left;
-		Monster.color = color;
-		Monster.create(Monster.top, Monster.left, Monster.color);
-		Monster.animationMonster(Monster.monster);
-		Monster.target = $('.link');
+	init: function(){
+
 	},
 	create: function(){
 		console.log('Monstre Création');
-		Monster.monster = $("<div>");
+		/*Monster.monster = $("<div>");
 		Monster.monster.addClass('tile monster')
             .attr('data-x', 'x')
             .attr('data-y', 'y')
@@ -18,13 +13,13 @@ const Monster = {
             .css('top', Monster.top)
             .css('left', Monster.left)
             .css('background-color', Monster.color);
-		App.$map.append(Monster.monster);
+		App.map.append(Monster.monster);
 
 		Monster.monsterSize = {
 		  height: Monster.monster.height(),
 		  width : Monster.monster.width()
 		};
-		return Monster.monster;
+		return Monster.monster;*/
 	},
 
 
@@ -34,53 +29,69 @@ const Monster = {
      * add css sprite
      */
 	animationMonster: function(monster){
-		monster
-		.animate({
+        Monster.target = $('.link');
+		monster.animate({
 			left: '+='+ App.mainsize * 2
 		},{
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(Monster.target, currentStep, fx, monster);
+                $.each(monster, function(key, value){
+                    App.controleColisionAction(Monster.target, currentStep, fx, $(value));
+                })
 			}
 		})
 		.animate({left: '-='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(Monster.target, currentStep, fx, monster);
+                $.each(monster, function(key, value){
+                    App.controleColisionAction(Monster.target, currentStep, fx, $(value));
+                })
 			}
 		})
 		.animate({top: '-='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(Monster.target, currentStep, fx, monster);
+                $.each(monster, function(key, value){
+                    App.controleColisionAction(Monster.target, currentStep, fx, $(value));
+                })
 			}
 		})
 		.animate({top: '+='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(Monster.target, currentStep, fx, monster);
+                $.each(monster, function(key, value){
+                    App.controleColisionAction(Monster.target, currentStep, fx, $(value));
+                })
 			}
 		})
 		.animate({left: '-='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(Monster.target, currentStep, fx, monster);
+                $.each(monster, function(key, value){
+                    App.controleColisionAction(Monster.target, currentStep, fx, $(value));
+                })
 			}
 		})
 		.animate({left: '+='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(Monster.target, currentStep, fx, monster);
+                $.each(monster, function(key, value){
+                    App.controleColisionAction(Monster.target, currentStep, fx, $(value));
+                })
 			}
 		})
 		.animate({top: '+='+ App.mainsize * 2}, {
 			duration: 1000,
 			step: function(currentStep, fx){
-				App.controleColisionAction(Monster.target, currentStep, fx, monster);
+                $.each(monster, function(key, value){
+                    App.controleColisionAction(Monster.target, currentStep, fx, $(value));
+                })
 			}
 		})
 		.animate({top: '-='+ App.mainsize * 2},{duration: 1000, step: function(currentStep, fx){
-			App.controleColisionAction(Monster.target, currentStep, fx, monster);
+            $.each(monster, function(key, value){
+                App.controleColisionAction(Monster.target, currentStep, fx, $(value));
+            })
 		}, complete: function(){Monster.animationMonster(monster)}})
 	}
 };

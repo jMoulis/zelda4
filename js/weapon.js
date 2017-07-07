@@ -1,7 +1,5 @@
+"use strict";
 const Weapon = {
-	init: function(){
-
-	},
 	create: function(){
 		console.log('Weapon Création');
         Weapon.$target = $('.monster');
@@ -13,22 +11,17 @@ const Weapon = {
             .css('top', Link.link.position().top)
             .css('left', Link.link.position().left)
             .css('background-color', 'red');
-		App.$map.append(Weapon.weapon);
+		App.gamewrapper.append(Weapon.weapon);
 
 		Weapon.weaponSize = {
 		  height: Weapon.weapon.height(),
 		  width : Weapon.weapon.width()
 		};
-		Weapon.animationWeapon(Weapon.weapon);
+		Weapon.animationArrow(Weapon.weapon);
 		return Weapon.weapon;
 	},
 
-
-	/**
-     * TODO:
-     *
-     */
-	animationWeapon: function(weapon){
+	animationArrow: function(weapon){
 		weapon.animate({
 			left: '+='+ App.mainsize * 10
 		},{
@@ -38,9 +31,8 @@ const Weapon = {
 			},
 			complete: function () {
 			    weapon.remove();
-                Weapon.animationWeapon(weapon);
+                Weapon.animationArrow(weapon);
             }
-		})
+		});
 	}
 };
-$(Weapon.init());

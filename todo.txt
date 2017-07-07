@@ -1,0 +1,5 @@
+Création de nouveau plateau de jeu
+Qu'est-ce qu'un plateau de jeu?
+1- Une map
+2- des monstres
+3- un héro
