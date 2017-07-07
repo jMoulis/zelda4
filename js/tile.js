@@ -8,7 +8,7 @@ var tile = {
 		.addClass(tile.getClasses(line, column))
 		.css(tile.getStyle(line, column))
 		.attr('data-line', line).attr('data-column', column);
-		app.$map.append(tile.$tile);
+		App.$map.append(tile.$tile);
   },
 
 
@@ -21,20 +21,20 @@ var tile = {
     classes += ' ';
     // top
 		if(line > 0){
-			classes += ' top-'+ tile.getType(column, line-1).name;
+			classes += 'top-'+ tile.getType(column, line-1).name;
 		}
 		if(column + 1 < map.tiles[line].length){
-			classes += ' right-'+ tile.getType(column+1, line).name;
+			classes += 'right-'+ tile.getType(column + 1, line).name;
 		} else {
 			classes += ''
 		}
 		if(line + 1 < map.tiles.length) {
-			classes += ' bottom-'+ tile.getType(column, line+1).name;
+			classes += 'bottom-'+ tile.getType(column, line + 1).name;
 		} else {
 			classes += ''
 		}
 		if(column > 0){
-			classes += ' left-'+ tile.getType(column-1, line).name;
+			classes += 'left-'+ tile.getType(column - 1, line).name;
 		} else {
 			classes += ' no-left'
 		}
@@ -47,8 +47,8 @@ var tile = {
    */
   getStyle: function(column, line) {
 		return style = {
-			left: column*16,
-			top: line*16
+			left: column*App.mainsize,
+			top: line*App.mainsize
 		}
   },
 
@@ -58,14 +58,11 @@ var tile = {
   getType: function(column, line) {
 		let char =	map.tiles[line][column];
 		let arrayTile = [];
-		//console.log(char);
-			//console.log(typeTile = map.types[char]);
 			$.each(map.types, function(key, value){
 				arrayTile[value.sign] = { name: value.name, perm: value.permission};
 			});
 
 		let typeTile = arrayTile[char];
-
 		return typeTile;
 
   },
