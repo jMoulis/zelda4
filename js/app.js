@@ -1,48 +1,41 @@
 "use strict";
 const App = {
-	indexWorld: 1,
 	init: function() {
         console.log('Zelda 4... The game starts');
+        App.indexWorld = 0;
+        App.indexLevel = 0;
 		App.level = 'level1';
 		App.gamewrapper = $('#game-wrapper');
 		App.mainsize = 16;
 		App.loadGame();
 	},
-
 	loadGame: function() {
 		$('#start').on('click', function(){
-			let world = 1;
-            App.createGame(world);
+            App.createGame(App.indexWorld, App.indexLevel);
+            Link.init(48, 240, 10);
 		})
 	},
-
-	createGame: function(world){
+	createGame: function(world, level){
         $(App.gamewrapper).attr('data-world', world);
-		let newLevel = '';
 		/**
 		 * 1- Loop over the games array into the world object
 		 * 2- Loop over into the world array
 		 * 3- Loop over each level to get the map pattern
 		 * */
-		$.each(Games[world], function (gameKey, world) {
-            $.each(world, function (levelKey, level) {
-				$.each(level, function (key, value) {
-                    newLevel = value.map;
-                    App.createMap(levelKey);
-                    App.createTiles(value.map);
-                })
-            })
-        });
-
-        Link.init(48, 240);
+		$.each(Games[1].worlds[world], function (gameKey, world) {
+			App.worldLength = world.length;
+			 $.each(world[level], function (stageKey, stage){
+				 App.createMap(level);
+				 App.createTiles(stage.map);
+			 })
+		 });
         Monster.animationMonster($('.monster'));
-        console.log($('.link'));
 
 	},
 	createMap: function(level){
 		App.map = $('<div>');
 		App.map.attr({
-			'id': level,
+			'id': 'level_'+ level,
             'class': 'map',
 			'data-level': level,
 		});
@@ -66,50 +59,54 @@ const App = {
           ((position2.left + App.mainsize) > position1.left) &&
           ((position2.top + App.mainsize) > position1.top);
 	},
-	controleColisionAction: function($target, currentStep, fx, element){
-        //Monster.movesDirection(currentStep, fx, perso);
+	controleColisionAction: function($target, currentStep, element){
         $.each($target, function(key, value){
             let collision = App.testCollision($(value).position(), element.position());
             if(collision){
-                if($(value).hasClass('forbidden')){
-
-                } else if($(value).hasClass('link')) {
+                if($(value).hasClass('link')) {
                     console.log('Oh no you killed danny');
+                    Link.life--;
+                    element.stop(true, false);
+                    element.css('left', element.position().left += App.mainsize/2 );
+                    $(value).css('left', $(value).position().left -= App.mainsize/2 );
+                    $(value).css('background-color', 'red');
+                    console.log(Link.life)
+
                 } else if($(value).hasClass('monster')){
                 	console.log('I got you bastard');
-                	$(value).stop();
+                	Link.points++;
+                	$(value).stop(true, false);
                 	$(value).remove();
-                	element.stop();
+                    element.stop(true, false);
                 	element.remove();
-                }
+                } if($(value).hasClass('forbidden')){
+					console.log('Forbidden');
+					element.stop(true, false);
+				}
             }
         });
     },
 	changeLevel: function(){
 		console.log('Change de level');
-		// Find the actual visible map
-		const visibleMap = $('.map:visible');
-		const hiddenMap = $('.map:hidden');
-		const nextMap = visibleMap.next('.map');
-		const prevMap = visibleMap.prev('.map');
-		const maps = $('.map');
 
-		visibleMap.fadeOut(function () {
-			if(visibleMap.data('level') + 1 < maps.length) {
-				nextMap.fadeIn();
-                console.log(App.indexWorld);
+		$('.map').fadeOut(function(){
+			// Delete the actual map
+			$(this).remove();
+			//Get the next level
+			App.indexLevel += 1;
+			//Check if there is another level in the world
+			if(App.indexLevel < App.worldLength){
+				//if so load the new level
+                App.createGame(App.indexWorld, App.indexLevel);
 			} else {
-				console.log('Terminé, tu passes au monde suivant...');
+				// If not load fetch the new world
+                console.log('Change world');
                 App.indexWorld += 1;
-                console.log(App.indexWorld);
-				$(App.gamewrapper).attr('data-world', App.indexWorld);
-				// C'est ici que tu change de monde!!!!
+                App.indexLevel = 0;
+                App.createGame(App.indexWorld, App.indexLevel);
 
-				App.gamewrapper.empty();
-				App.createGame($(App.gamewrapper).attr('data-world'));
 			}
 		});
-
 	},
 };
 $(App.init);

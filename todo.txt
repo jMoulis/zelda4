@@ -1,5 +1,16 @@
-Création de nouveau plateau de jeu
-Qu'est-ce qu'un plateau de jeu?
-1- Une map
-2- des monstres
-3- un héro
+TODO:
+Link:
+- Collision with monster
+- Deal points/lives...
+
+World:
+- Create a full map
+-- Click on ico to enter new available world
+-- At every changing world go on it
+
+Message:
+- When world go success
+
+Monster:
+- Make them start out of bounds and fadeIn them at the right place.
+To avoid link to get stuck and leave an empty div in the middle of now where
