@@ -38,51 +38,50 @@ const Link = {
     },
 	moves: function(){
 		Link.link = $('.link');
-		let $top = Link.link.position().top;
-		let $left = Link.link.position().left;
+		const linkPos = Link.link.position();
 
 		$(window).on('keypress', function(e){
     		console.log(e.which);
 		  	switch(e.which) {
 				case Link.keys.right:
 				 /*go right*/
-				 	Link.direction = 'right';
-					 if(Link.getElement($top, $left + Link.movesStep).hasClass('allowed')){
-					 	Link.link.css('left', $left += Link.movesStep);
-					 	Link.doorAction($top, $left);
-					 	Link.stonesAction($top, $left);
-                         Link.heartAction($top, $left);
-					 }
-					 break;
+				 Link.direction = 'right';
+				 if(Link.getElement(linkPos.top, linkPos.left + Link.movesStep).hasClass('allowed')){
+					Link.link.css('left', linkPos.left += Link.movesStep);
+					Link.doorAction(linkPos);
+					Link.stonesAction(linkPos);
+					Link.heartAction(linkPos);
+				 }
+				 break;
 				case Link.keys.left:
 					//go left
 					Link.direction = 'left';
-					if(Link.getElement($top, $left - Link.movesStep).hasClass('allowed')){
-						Link.link.css('left', $left -= Link.movesStep);
-                        Link.doorAction($top, $left);
-                        Link.stonesAction($top, $left);
-                        Link.heartAction($top, $left);
+					if(Link.getElement(linkPos.top, linkPos.left - Link.movesStep).hasClass('allowed')){
+						Link.link.css('left', linkPos.left -= Link.movesStep);
+                        Link.doorAction(linkPos);
+                        Link.stonesAction(linkPos);
+                        Link.heartAction(linkPos);
 					}
 					break;
 				case Link.keys.up:
 					//go up
 					Link.direction = 'up';
-					if(Link.getElement($top - Link.movesStep, $left).hasClass('allowed')){
-						Link.link.css('top', $top -= Link.movesStep);
-						Link.doorAction($top, $left);
-                        Link.stonesAction($top, $left);
-                        Link.heartAction($top, $left);
+					if(Link.getElement(linkPos.top - Link.movesStep, linkPos.left).hasClass('allowed')){
+						Link.link.css('top', linkPos.top -= Link.movesStep);
+						Link.doorAction(linkPos);
+                        Link.stonesAction(linkPos);
+                        Link.heartAction(linkPos);
 					}
 					break;
 
 				case Link.keys.down:
 					//go down
 					Link.direction = 'down';
-					if(Link.getElement($top + Link.movesStep, $left).hasClass('allowed')){
-						Link.link.css('top', $top += Link.movesStep);
-						Link.doorAction($top, $left);
-						Link.stonesAction($top, $left);
-						Link.heartAction($top, $left);
+					if(Link.getElement(linkPos.top + Link.movesStep, linkPos.left).hasClass('allowed')){
+						Link.link.css('top', linkPos.top += Link.movesStep);
+						Link.doorAction(linkPos);
+						Link.stonesAction(linkPos);
+						Link.heartAction(linkPos);
 					}
 					break;
 
@@ -97,22 +96,22 @@ const Link = {
 		  	}
 		});
 	},
-	stonesAction: function (top, left) {
-        if(Link.getElement(top, left).hasClass('stone')){
+	stonesAction: function (linkPos) {
+        if(Link.getElement(linkPos.top, linkPos.left).hasClass('stone')){
             console.log('You got the stone');
             $('.stone').remove();
             Link.stonesGot++;
             $('#stones').text(Link.stonesGot);
         }
     },
-	doorAction: function(top, left){
-        if(Link.getElement(top, left).hasClass('door')){
+	doorAction: function(linkPos){
+        if(Link.getElement(linkPos.top, linkPos.left).hasClass('door')){
             console.log('You are at the door, ring');
             App.changeLevel();
         }
 	},
-	heartAction: function (top, left) {
-        if(Link.getElement(top, left).hasClass('heart')){
+	heartAction: function (linkPos) {
+        if(Link.getElement(linkPos.top, linkPos.left).hasClass('heart')){
             console.log('You got some life back');
             $('.heart').remove();
             if(Link.life < 5 && Link.life >= 0){

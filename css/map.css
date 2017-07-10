@@ -1,8 +1,33 @@
 #game-wrapper {
+	display: none;
 	width: 800px;
+	height: 512px;
+	background-color: bisque;
+	font-family: serif;
+}
+#game-wrapper.game-over {
+	background-color: black;
+	text-align: center;
+	padding-top: 200px;
+}
+#game-loader {
+	background: url("../images/logo_zelda.png") black no-repeat;
+	background-size: contain;
+	position: relative;
+	width: 800px;
+	height: 512px;
+}
+#game-loader button {
+	position: absolute;
+	top: 460px;
+	left: 378px;
+	border: none;
+	background-color: transparent;
+	font-size: 2em;
+	color: white;
 }
 body {
-	background-color: black;
+	background-color: gray;
 }
 nav {
 	display: flex;
@@ -11,6 +36,7 @@ nav {
 	width: 800px;
 	position: absolute;
 	padding-top: 30px;
+	align-items: baseline;
 }
 #listeInfos {
 	width: 100%;
@@ -52,4 +78,31 @@ nav {
 }
 .heart {
 	background-color: red;
+}
+h1 {
+	color: white;
+	font-size: 2em;
+	margin: auto 0;
+	top: 250px;
+}
+
+#menu-pause {
+	display: none;
+	width: 800px;
+	height: 512px;
+	position: absolute;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 3000;
+	text-align: center;
+}
+.menu {
+	background-color: transparent;
+	border: none;
+}
+#menu-pause div {
+	padding-top: 60px;
+	margin: 0 auto;
+	width: 50%;
+	height: 80%;
+	background-color: gray;
 }

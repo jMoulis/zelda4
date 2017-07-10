@@ -7,16 +7,21 @@ const App = {
 		App.gamewrapper = $('#game-wrapper');
 		App.mainsize = 32;
         App.linkStartingPos = {left: 96, top:480};
-		App.loadGame();
+        App.menuPause = $('#menu-pause');
+		App.gamewrapper.on('click', '#menu-btn', App.openPauseMenu);
+		App.mainContainer = $('.container');
+        App.mainContainer.on('click', '#close-menu', App.closePauseMenu);
+        App.mainContainer.on('click', '.restart', App.restartAction);
+        App.mainContainer.on('click', '#start', App.loadGame);
 	},
 	loadGame: function() {
-		$('#start').on('click', function(){
-			App.createMap();
-            App.link = new Object(Link);
-            App.link.init(App.linkStartingPos);
-            App.createBoardGame(App.indexWorld, App.indexLevel);
-			App.displayer();
-		})
+		App.gamewrapper.show();
+		$('#game-loader').hide();
+		App.createMap();
+		App.link = new Object(Link);
+		App.link.init(App.linkStartingPos);
+		App.createBoardGame(App.indexWorld, App.indexLevel);
+		App.displayer();
 	},
 	createBoardGame: function(world, level){
     	$(App.gamewrapper).attr('data-world', world);
@@ -68,7 +73,8 @@ const App = {
 					if(Link.life >= 0){
 						App.updateLife();
 					} else {
-						//App.gamewrapper.empty();
+						App.gamewrapper.empty();
+						App.gameOverAction();
 					}
 					element.stop(true, false).css('left', element.position().left += App.mainsize / 2 );
 					$(value).css({
@@ -98,13 +104,14 @@ const App = {
 	changeLevel: function(){
 		console.log('Change de level');
 		let linkPos = $('.link').position();
-
-		if($('.monster').length > 0){
+		console.log($('.monster'));
+		if($('.monster').length >= 0){
 			$.each($('.monster'), function (key, value) {
                 $(value).stop(true, false).remove();
             })
+			console.log('test')
 		}
-
+		$('.link').remove();
 		$('.map').fadeOut(function(){
 			//Get the next level
 			App.indexLevel += 1;
@@ -145,7 +152,7 @@ const App = {
 		const displayer = $("<nav>");
 		displayer.attr('id', 'displayer');
         App.gamewrapper.prepend(displayer);
-
+		displayer.append('<button id="menu-btn">Menu</button>');
         const listeInfos = $('<ul>');
         listeInfos.attr('id', 'listeInfos');
 		displayer.append(listeInfos);
@@ -171,10 +178,46 @@ const App = {
         listeInfos.append('<li>Stones<span id="stones" class="item-infos">0</span></li>');
 		// Display Monster
         listeInfos.append('<li>Monster<span id="monsterKilled" class="item-infos">0</span></li>');
+
     },
 	updateLife: function () {
 		// Find the last heart and remove it
 		$('.life-group ul li:last-child').remove();
-    }
+    },
+	gameOverAction: function(){
+		console.log('T\'es ko, fréro');
+		App.gamewrapper.append('<h1>Game Over</h1>');
+		App.gamewrapper.append('<button class="restart">Recommencer</button>');
+		App.gamewrapper.addClass('game-over');
+	},
+	openPauseMenu: function(){
+        App.menuPause.empty().fadeIn();
+		const menuContent = $('<div>');
+		let menuContentHtml = '<ul>';
+		menuContentHtml += '<li><a href="#" id="close-menu">fermer</a></li>';
+		menuContentHtml += '<li><a href="#" class="restart">Redémarrer</li>';
+		menuContentHtml += '</ul>';
+		menuContent.html(menuContentHtml);
+
+        App.menuPause.append(menuContent);
+		$.each($('.monster'), function (key, value) {
+			$(value).stop(true, false);
+        });
+		$(window).off('keypress');
+	},
+	closePauseMenu: function () {
+        App.menuPause.fadeOut();
+		Monster.animationMonster($('.monster'));
+		Link.moves();
+    },
+	restartAction: function(){
+		if(confirm('Voulez-vous vraiment quitter?')){
+            document.location.reload(true);
+		} else {
+			return false;
+		}
+
+
+	},
 };
 $(App.init);
