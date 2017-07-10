@@ -1,7 +1,31 @@
 #game-wrapper {
-
+	width: 800px;
 }
-
+body {
+	background-color: black;
+}
+nav {
+	display: flex;
+	z-index: 2000;
+	height: 100px;
+	width: 800px;
+	position: absolute;
+	padding-top: 30px;
+}
+#listeInfos {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	text-align: center;
+}
+.life-group ul {
+	display: flex;
+	justify-content: flex-start;
+	color: red;
+}
+.item-infos {
+	display: block;
+}
 .map {
 	/*background: #948d4e;*/
 	position: relative;
@@ -10,8 +34,22 @@
 
 .link {
 	background-color: yellow;
-	width: 25px;
-	height: 25px;
+}
+.link, .monster, .bigmonster {
+	width: 32px;
+	height: 32px;
 	position: absolute;
 	z-index: 2000;
+}
+.monster {
+	background-color: black;
+}
+.bigmonster {
+	background-color: blueviolet;
+}
+.arrow {
+	background-color: chartreuse;
+}
+.life {
+	background-color: red;
 }

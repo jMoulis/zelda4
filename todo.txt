@@ -2,6 +2,7 @@ TODO:
 Link:
 - Collision with monster
 - Deal points/lives...
+!-- Pb displaying link on the other maps, when appended to map instead of the gamecontainer --!
 
 World:
 - Create a full map

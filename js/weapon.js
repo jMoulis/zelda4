@@ -2,7 +2,7 @@
 const Weapon = {
 	create: function(){
 		//console.log('Weapon Création');
-        Weapon.$target = $('.monster');
+        Weapon.target = $('.monster');
 		Weapon.weapon = $("<div>");
 		Weapon.weapon.addClass('tile weapon')
             .attr('data-x', 'x')
@@ -27,22 +27,22 @@ const Weapon = {
         switch (Link.direction) {
             case 'right':
                 linkPos = {
-                    left: '+='+ App.mainsize * 10
+                    left: '+='+ App.mainsize / 2
                 };
                 break;
             case 'left':
                 linkPos = {
-                    left: '-='+ App.mainsize * 10
+                    left: '-='+ App.mainsize / 2
                 };
                 break;
             case 'up':
                 linkPos = {
-                    top: '-='+ App.mainsize * 10
+                    top: '-='+ App.mainsize / 2
                 };
                 break;
             case 'down':
                 linkPos = {
-                    top: '+='+ App.mainsize * 10
+                    top: '+='+ App.mainsize / 2
                 };
                 break;
             default:
@@ -57,7 +57,7 @@ const Weapon = {
 			{
 				duration: 100,
 				step: function(currentStep){
-						App.controleColisionAction(Weapon.$target, currentStep, weapon);
+                    App.controleCollisionAction(Weapon.target, currentStep, weapon);
 					},
 				complete: function () {
 					weapon.remove();

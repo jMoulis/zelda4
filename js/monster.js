@@ -1,7 +1,8 @@
 "use strict";
 const Monster = {
-	init: function(){
-
+	init: function(top, left){
+		this.top = top;
+		this.left = left
 	},
 	create: function(){
 		console.log('Monstre Création');
@@ -29,14 +30,14 @@ const Monster = {
      * add css sprite
      */
 	animationMonster: function(monster){
-        Monster.target = $('.link');
+        const target = $('.link');
 		monster.animate({
 			left: '+='+ App.mainsize * 2
 		},{
 			duration: 1000,
 			step: function(currentStep){
                 $.each(monster, function(key, value){
-                    App.controleColisionAction(Monster.target, currentStep, $(value));
+                    App.controleCollisionAction(target, currentStep, $(value));
                 })
 			}
 		})
@@ -44,7 +45,7 @@ const Monster = {
 			duration: 1000,
 			step: function(currentStep){
                 $.each(monster, function(key, value){
-                    App.controleColisionAction(Monster.target, currentStep, $(value));
+                    App.controleCollisionAction(target, currentStep, $(value));
                 })
 			}
 		})
@@ -52,7 +53,7 @@ const Monster = {
 			duration: 1000,
 			step: function(currentStep){
                 $.each(monster, function(key, value){
-                    App.controleColisionAction(Monster.target, currentStep, $(value));
+                    App.controleCollisionAction(target, currentStep, $(value));
                 })
 			}
 		})
@@ -60,7 +61,7 @@ const Monster = {
 			duration: 1000,
 			step: function(currentStep){
                 $.each(monster, function(key, value){
-                    App.controleColisionAction(Monster.target, currentStep, $(value));
+                    App.controleCollisionAction(target, currentStep, $(value));
                 })
 			}
 		})
@@ -68,7 +69,7 @@ const Monster = {
 			duration: 1000,
 			step: function(currentStep){
                 $.each(monster, function(key, value){
-                    App.controleColisionAction(Monster.target, currentStep, $(value));
+                    App.controleCollisionAction(target, currentStep, $(value));
                 })
 			}
 		})
@@ -76,7 +77,7 @@ const Monster = {
 			duration: 1000,
 			step: function(currentStep){
                 $.each(monster, function(key, value){
-                    App.controleColisionAction(Monster.target, currentStep, $(value));
+                    App.controleCollisionAction(target, currentStep, $(value));
                 })
 			}
 		})
@@ -84,13 +85,13 @@ const Monster = {
 			duration: 1000,
 			step: function(currentStep){
                 $.each(monster, function(key, value){
-                    App.controleColisionAction(Monster.target, currentStep, $(value));
+                    App.controleCollisionAction(target, currentStep, $(value));
                 })
 			}
 		})
 		.animate({top: '-='+ App.mainsize * 2},{duration: 1000, step: function(currentStep){
             $.each(monster, function(key, value){
-                App.controleColisionAction(Monster.target, currentStep, $(value));
+                App.controleCollisionAction(target, currentStep, $(value));
             })
 		}, complete: function(){Monster.animationMonster(monster)}})
 	}
