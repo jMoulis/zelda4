@@ -1,7 +1,7 @@
 "use strict";
 const Link = {
-	init: function(position, life){
-		this.life = life;
+	init: function(position){
+		this.life = 5;
 		this.points = 0;
 		this.experience = 0;
 		this.monsterKilled = 0;
@@ -13,7 +13,6 @@ const Link = {
 			'down': 115,
 			'arrow': 109
 		};
-		Link.target = $('.forbidden');
 		Link.direction = 'up';
 		Link.movesStep = App.mainsize;
 		Link.create(position);
@@ -41,6 +40,7 @@ const Link = {
 		Link.link = $('.link');
 		let $top = Link.link.position().top;
 		let $left = Link.link.position().left;
+
 		$(window).on('keypress', function(e){
     		console.log(e.which);
 		  	switch(e.which) {
@@ -48,17 +48,10 @@ const Link = {
 				 /*go right*/
 				 	Link.direction = 'right';
 					 if(Link.getElement($top, $left + Link.movesStep).hasClass('allowed')){
-						Link.link.css('left', $left += Link.movesStep);
-						if(Link.getElement($top, $left).hasClass('door')){
-							console.log('You are at the door, ring');
-							App.changeLevel();
-						}
-						if(Link.getElement($top, $left).hasClass('stone')){
-							  console.log('You got the stone');
-							  $('.stone').remove();
-							  Link.stonesGot++;
-                            $('#stones').text(Link.stonesGot);
-						}
+					 	Link.link.css('left', $left += Link.movesStep);
+					 	Link.doorAction($top, $left);
+					 	Link.stonesAction($top, $left);
+                         Link.heartAction($top, $left);
 					 }
 					 break;
 				case Link.keys.left:
@@ -66,63 +59,66 @@ const Link = {
 					Link.direction = 'left';
 					if(Link.getElement($top, $left - Link.movesStep).hasClass('allowed')){
 						Link.link.css('left', $left -= Link.movesStep);
-						if(Link.getElement($top, $left).hasClass('door')){
-							console.log('You are at the door, ring');
-							App.changeLevel();
-						}
-						if(Link.getElement($top, $left).hasClass('stone')){
-							console.log('You got the stone');
-							$('.stone').remove();
-                            Link.stonesGot++;
-                            $('#stones').text(Link.stonesGot);
-						}
+                        Link.doorAction($top, $left);
+                        Link.stonesAction($top, $left);
+                        Link.heartAction($top, $left);
 					}
 					break;
 				case Link.keys.up:
 					//go up
 					Link.direction = 'up';
 					if(Link.getElement($top - Link.movesStep, $left).hasClass('allowed')){
-					  Link.link.css('top', $top -= Link.movesStep);
-						if(Link.getElement($top, $left).hasClass('door')){
-							console.log('You are at the door, ring');
-							App.changeLevel();
-						}
-						if(Link.getElement($top, $left).hasClass('stone')){
-							console.log('You got the stone');
-							$('.stone').remove();
-                            Link.stonesGot++;
-                            $('#stones').text(Link.stonesGot);
-						}
+						Link.link.css('top', $top -= Link.movesStep);
+						Link.doorAction($top, $left);
+                        Link.stonesAction($top, $left);
+                        Link.heartAction($top, $left);
 					}
 					break;
 
-					case Link.keys.down:
-						//go down
-						Link.direction = 'down';
-						if(Link.getElement($top + Link.movesStep, $left).hasClass('allowed')){
-							Link.link.css('top', $top += Link.movesStep);
-							if(Link.getElement($top, $left).hasClass('door')){
-								console.log('You are at the door, ring');
-								App.changeLevel();
-							}
-							if(Link.getElement($top, $left).hasClass('stone')){
-								console.log('You got the stone');
-								$('.stone').remove();
-                                Link.stonesGot++;
-                                $('#stones').text(Link.stonesGot);
-							}
-						}
-						break;
-
-					case Link.keys.arrow:
-						e.keyCode = 0;
-						Weapon.create();
+				case Link.keys.down:
+					//go down
+					Link.direction = 'down';
+					if(Link.getElement($top + Link.movesStep, $left).hasClass('allowed')){
+						Link.link.css('top', $top += Link.movesStep);
+						Link.doorAction($top, $left);
+						Link.stonesAction($top, $left);
+						Link.heartAction($top, $left);
+					}
 					break;
 
-					default:
-						console.log('key undefined');
-			  		break;
+				case Link.keys.arrow:
+					e.keyCode = 0;
+					Weapon.create();
+				break;
+
+				default:
+					console.log('key undefined');
+				break;
 		  	}
 		});
 	},
+	stonesAction: function (top, left) {
+        if(Link.getElement(top, left).hasClass('stone')){
+            console.log('You got the stone');
+            $('.stone').remove();
+            Link.stonesGot++;
+            $('#stones').text(Link.stonesGot);
+        }
+    },
+	doorAction: function(top, left){
+        if(Link.getElement(top, left).hasClass('door')){
+            console.log('You are at the door, ring');
+            App.changeLevel();
+        }
+	},
+	heartAction: function (top, left) {
+        if(Link.getElement(top, left).hasClass('heart')){
+            console.log('You got some life back');
+            $('.heart').remove();
+            if(Link.life < 5 && Link.life >= 0){
+                Link.life++;
+                $('.life-group ul').append('<li class="life-item">&hearts;</li>')
+			}
+        }
+    }
 };

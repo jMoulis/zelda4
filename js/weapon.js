@@ -27,22 +27,22 @@ const Weapon = {
         switch (Link.direction) {
             case 'right':
                 linkPos = {
-                    left: '+='+ App.mainsize / 2
+                    left: '+='+ App.mainsize
                 };
                 break;
             case 'left':
                 linkPos = {
-                    left: '-='+ App.mainsize / 2
+                    left: '-='+ App.mainsize
                 };
                 break;
             case 'up':
                 linkPos = {
-                    top: '-='+ App.mainsize / 2
+                    top: '-='+ App.mainsize
                 };
                 break;
             case 'down':
                 linkPos = {
-                    top: '+='+ App.mainsize / 2
+                    top: '+='+ App.mainsize
                 };
                 break;
             default:
@@ -58,7 +58,7 @@ const Weapon = {
 				duration: 100,
 				step: function(currentStep){
                     App.controleCollisionAction(Weapon.target, currentStep, weapon);
-					},
+                },
 				complete: function () {
 					weapon.remove();
 				}

@@ -13,10 +13,9 @@ const App = {
 		$('#start').on('click', function(){
 			App.createMap();
             App.link = new Object(Link);
-            App.link.init(App.linkStartingPos, 5);
-			App.createBoardGame(App.indexWorld, App.indexLevel);
+            App.link.init(App.linkStartingPos);
+            App.createBoardGame(App.indexWorld, App.indexLevel);
 			App.displayer();
-
 		})
 	},
 	createBoardGame: function(world, level){
@@ -30,7 +29,7 @@ const App = {
 			App.worldLength = world.length;
 			 $.each(world[level], function (stageKey, stage){
 				 App.createTiles(stage.map);
-			 })
+			 });
 		});
         Monster.animationMonster($('.monster'));
 	},
@@ -85,7 +84,7 @@ const App = {
 
 					$('#monsterKilled').text(Link.monsterKilled);
 					$('#xp').text(Link.experience);
-
+					console.log($(value))
 					$(value).stop(true, false).remove();
 					element.stop(true, false).remove();
 				}
@@ -100,6 +99,12 @@ const App = {
 		console.log('Change de level');
 		let linkPos = $('.link').position();
 
+		if($('.monster').length > 0){
+			$.each($('.monster'), function (key, value) {
+                $(value).stop(true, false).remove();
+            })
+		}
+
 		$('.map').fadeOut(function(){
 			//Get the next level
 			App.indexLevel += 1;
@@ -107,6 +112,7 @@ const App = {
 			//Check if there is another level in the world
 			if(App.indexLevel < App.worldLength){
                 App.link.create(linkPos);
+
 				App.createBoardGame(App.indexWorld, App.indexLevel);
 				$(this).fadeIn();
 				App.map.attr({
@@ -145,7 +151,7 @@ const App = {
 		displayer.append(listeInfos);
 		// Display level et world
 		let listeInfosHtml = '<li>World - <span id="world-info" class="" >'+ (App.indexWorld + 1) +'</span>';
-		listeInfosHtml += ' Level-<span id="level-info" class="i">'+ (App.indexLevel+1)  +'</span></li>';
+		listeInfosHtml += ' Level - <span id="level-info" class="i">'+ (App.indexLevel+1)  +'</span></li>';
         listeInfos.append(listeInfosHtml);
 
 		// Display life

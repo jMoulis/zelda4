@@ -63,6 +63,7 @@ const Monster = {
                 $.each(monster, function(key, value){
                     App.controleCollisionAction(target, currentStep, $(value));
                 })
+
 			}
 		})
 		.animate({left: '-='+ App.mainsize * 2}, {
