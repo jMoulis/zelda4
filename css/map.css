@@ -6,13 +6,12 @@
 	/*background: #948d4e;*/
 	position: relative;
 	margin: auto;
-	width: 400px;
-	height: 256px;
 }
 
-#link {
+.link {
 	background-color: yellow;
-	width: 16px;
-	height: 16px;
+	width: 25px;
+	height: 25px;
 	position: absolute;
+	z-index: 2000;
 }

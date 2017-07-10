@@ -1,6 +1,5 @@
 "use strict";
 const tile = {
-
   create: function(line, column, map) {
 		tile.tile = $('<div>');
 		tile.tile

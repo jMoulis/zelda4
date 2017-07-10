@@ -11,10 +11,10 @@ const Link = {
 			'down': 115,
 			'arrow': 109
 		};
-        Link.target = $('.forbidden');
+    Link.target = $('.forbidden');
 		Link.direction = 'up';
-        Link.movesStep = App.mainsize;
-        Link.create(left, top);
+    Link.movesStep = App.mainsize;
+    Link.create(left, top);
 	},
 	create: function(left, top){
 		Link.link = $('<div>');
@@ -25,9 +25,9 @@ const Link = {
 			left: left,
 			top: top
 		});
-        App.map.append(Link.link);
+  	App.map.append(Link.link);
 		if($('.link').length !== 0) {
-            Link.moves();
+      Link.moves();
 		}
 	},
 	moves: function(){
@@ -42,14 +42,14 @@ const Link = {
 			 Link.direction = 'right';
 			 if(App.getElement($top, $left + Link.movesStep).hasClass('allowed')){
 			 	//Link.animateLink({left: '+='+ App.mainsize});
-                 Link.link.css('left', $left += Link.movesStep);
+          Link.link.css('left', $left += Link.movesStep);
 				if(App.getElement($top, $left + Link.movesStep).hasClass('door')){
 					console.log('You are at the door, ring');
 					App.changeLevel();
 				}
 				if(App.getElement($top, $left + Link.movesStep).hasClass('stone')){
-                     console.log('You got the stone');
-                     $('.stone').remove();
+          console.log('You got the stone');
+          $('.stone').remove();
 				}
 			 }
 			 break;
