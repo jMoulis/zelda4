@@ -17,10 +17,11 @@ const Link = {
 		Link.movesStep = App.mainsize;
 		Link.normalState = {
 		    'right': '-435px -905px',
-            'left': '-70px -905px'
+            'left': '-70px -905px',
+			'up': '-20px -970px',
+			'down': '-402px -970px'
+        };
 
-
-        }
 		Link.create(position);
 		Link.moves();
 		Link.swordTogglePosition();
@@ -103,6 +104,40 @@ const Link = {
 	},
     swordTogglePosition: function(){
 
+        $(document).on('keydown', function(e) {
+            if (e.which === Link.keys.sword) {
+                Weapon.create();
+            }
+        });
+
+        $(document).on('keyup', function(e) {
+            if (e.which === Link.keys.sword) {
+                switch (Link.direction){
+                    case 'right':
+                        Link.link.css({
+                            'background-position': '-435px -905px'
+                        });
+                        break;
+                    case 'left':
+                        Link.link.css({
+                            'background-position': '-70px -905px'
+                        });
+                        break;
+                    case 'up':
+                        Link.link.css({
+                            'background-position': '-20px -970px'
+                        });
+                        break;
+                    case 'down':
+                        Link.link.css({
+                            'background-position': '-402px -970px'
+                        });
+                        break;
+                }
+            }
+        })
+    },
+	movesToggle: function () {
         $(document).on('keydown', function(e) {
             if (e.which === Link.keys.sword) {
                 Weapon.create();

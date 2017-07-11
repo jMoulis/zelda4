@@ -1,10 +1,9 @@
 .perso {
 	background: url('../images/link_sprite.png') no-repeat;
-	width: 32px;
-	height: 32px;
+	width: 48px;
+	height: 48px;
 	position: absolute;
 }
-
 #game-wrapper {
 	display: none;
 	width: 800px;
@@ -64,7 +63,6 @@ nav {
 	position: relative;
 	//margin: auto;
 }
-
 .link {
 	width: 48px;
 	height: 52px;
@@ -72,10 +70,13 @@ nav {
 }
 .link, .monster, .bigmonster {
 	position: absolute;
-	z-index: 6000;
+	z-index: 2000;
 }
 .monster {
-	background-color: black;
+	background: url('../images/7584.png') no-repeat;
+	background-position: -185px -90px;
+	width: 44px;
+	height: 52px;
 }
 .bigmonster {
 	background-color: blueviolet;
@@ -92,7 +93,6 @@ h1 {
 	margin: auto 0;
 	top: 250px;
 }
-
 #menu-pause {
 	display: none;
 	width: 800px;

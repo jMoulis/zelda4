@@ -30,7 +30,7 @@ const App = {
 		App.link.init(App.linkStartingPos);
 		App.createBoardGame();
 		App.displayer();
-		Monster.interval = setInterval(Monster.setRandomAnimation, 3000);
+		Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
 	},
 	createBoardGame: function(){
     	$(App.gamewrapper).attr('data-world', App.indexWorld);
@@ -45,6 +45,7 @@ const App = {
 				 App.createTiles(stage.map);
 			 });
 		});
+
 	},
 	createMap: function(){
 		App.map = $('<div>');
@@ -112,7 +113,6 @@ const App = {
     /**
      * Action on levelChange
      * 1- We fade out the actual map
-     * 2-
      *
      * */
 	changeLevel: function(){
@@ -121,6 +121,7 @@ const App = {
 		const linkGraphic = $('.link');
 		const linkPos = linkGraphic.position();
 		const monster = $('.monster');
+		clearInterval(Monster.interval);
 
 		// Supprime les monstres restant pour éviter de perdre des vies
         // A cause d'une putain de collision qui vient de nulle part
@@ -140,7 +141,7 @@ const App = {
 
 			    App.link.create(linkPos);
 				App.createBoardGame(App.indexWorld, App.indexLevel);
-                Monster.animateRightAndLeft($('.monster'));
+                Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
 				$(this).fadeIn();
 				App.map.attr({
 					'id': 'level_'+ App.indexLevel,
@@ -156,7 +157,7 @@ const App = {
 
                 App.link.create(linkPos);
                 App.createBoardGame(App.indexWorld, App.indexLevel);
-                Monster.animateRightAndLeft($('.monster'));
+                Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
                 $(this).fadeIn();
 
                 App.map.attr({

@@ -14,8 +14,8 @@ const Weapon = {
 		App.map.append(Weapon.weapon);
 		Weapon.distance = App.mainsize * 2;
 		Weapon.weaponSize = {
-		  height: Weapon.weapon.height(),
-		  width : Weapon.weapon.width()
+		    height: Weapon.weapon.height(),
+            width : Weapon.weapon.width()
 		};
 
         Weapon.animationArrow(Weapon.weapon, Weapon.arrowDirection());
@@ -73,6 +73,7 @@ const Weapon = {
 				complete: function () {
 					weapon.remove();
 				}
-			});
+			}
+			);
 	},
 };

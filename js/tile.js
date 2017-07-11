@@ -35,7 +35,6 @@ const tile = {
   },
 
   getStyle: function(column, line) {
-
 	return {
         left: column * App.mainsize,
         top: line * App.mainsize

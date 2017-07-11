@@ -44,6 +44,7 @@ const Monster = {
                     step: function(currentStep){
                         $.each($('.monster'), function(key, value){
                             App.controleCollisionAction($('.link'), currentStep, $(value));
+
                         })
                     },
                     complete: function(){
@@ -76,6 +77,7 @@ const Monster = {
                 step: function(currentStep){
                     $.each($('.monster'), function(key, value){
                         App.controleCollisionAction($('.link'), currentStep, $(value));
+
                     })
                 },
                 complete: function(){
@@ -92,6 +94,7 @@ const Monster = {
                 step: function(currentStep){
                     $.each($('.monster'), function(key, value){
                         App.controleCollisionAction($('.link'), currentStep, $(value));
+
                     })
                 },
                 complete: function(){
