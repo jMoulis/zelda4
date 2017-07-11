@@ -35,11 +35,11 @@ const tile = {
   },
 
   getStyle: function(column, line) {
-  	let style = {
+
+	return {
         left: column * App.mainsize,
         top: line * App.mainsize
     };
-	return style;
   },
 
   getType: function(map, column, line) {

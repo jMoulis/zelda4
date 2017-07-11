@@ -1,3 +1,10 @@
+.perso {
+	background: url('../images/link_sprite.png') no-repeat;
+	width: 32px;
+	height: 32px;
+	position: absolute;
+}
+
 #game-wrapper {
 	display: none;
 	width: 800px;
@@ -55,17 +62,17 @@ nav {
 .map {
 	/*background: #948d4e;*/
 	position: relative;
-	margin: auto;
+	//margin: auto;
 }
 
 .link {
-	background-color: yellow;
+	width: 48px;
+	height: 52px;
+	background-position: -20px -970px;
 }
 .link, .monster, .bigmonster {
-	width: 32px;
-	height: 32px;
 	position: absolute;
-	z-index: 2000;
+	z-index: 6000;
 }
 .monster {
 	background-color: black;

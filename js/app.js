@@ -2,41 +2,49 @@
 const App = {
 	init: function() {
 		console.log('Zelda 4... The game starts');
+		App.selector = {
+		    mainContainer: $('.container'),
+            gamewrapper: $('#game-wrapper'),
+            menuPause: $('#menu-pause'),
+            gameLoader: $('#game-loader'),
+            mapContainer: $('.map'),
+        };
 		App.indexWorld = 0;
 		App.indexLevel = 0;
-		App.gamewrapper = $('#game-wrapper');
 		App.mainsize = 32;
-        App.linkStartingPos = {left: 96, top:480};
-        App.menuPause = $('#menu-pause');
-		App.gamewrapper.on('click', '#menu-btn', App.openPauseMenu);
-		App.mainContainer = $('.container');
-        App.mainContainer.on('click', '#close-menu', App.closePauseMenu);
-        App.mainContainer.on('click', '.restart', App.restartAction);
-        App.mainContainer.on('click', '#start', App.loadGame);
+		App.persoSize = 32;
+        App.linkStartingPos = {left: 128, top:480};
+
+        App.selector.mainContainer.on('click', '#menu-btn', App.openPauseMenu);
+        App.selector.mainContainer.on('click', '#close-menu', App.closePauseMenu);
+        App.selector.mainContainer.on('click', '.restart', App.restartAction);
+        App.selector.mainContainer.on('click', '#start', App.loadGame);
+
+
 	},
 	loadGame: function() {
-		App.gamewrapper.show();
-		$('#game-loader').hide();
+		App.selector.gamewrapper.show();
+        App.selector.gameLoader.hide();
 		App.createMap();
 		App.link = new Object(Link);
 		App.link.init(App.linkStartingPos);
-		App.createBoardGame(App.indexWorld, App.indexLevel);
+		App.createBoardGame();
 		App.displayer();
+		Monster.interval = setInterval(Monster.setRandomAnimation, 3000);
 	},
-	createBoardGame: function(world, level){
-    	$(App.gamewrapper).attr('data-world', world);
+	createBoardGame: function(){
+    	$(App.gamewrapper).attr('data-world', App.indexWorld);
 		/**
 		 * 1- Loop over the games array into the world object
 		 * 2- Loop over into the world array
 		 * 3- Loop over each level to get the map pattern
 		 * */
-		$.each(Games[1].worlds[world], function (gameKey, world) {
+		$.each(Games[1].worlds[App.indexWorld], function (gameKey, world) {
 			App.worldLength = world.length;
-			 $.each(world[level], function (stageKey, stage){
+			 $.each(world[App.indexLevel], function (stageKey, stage){
 				 App.createTiles(stage.map);
 			 });
 		});
-        Monster.animationMonster($('.monster'));
 	},
 	createMap: function(){
 		App.map = $('<div>');
@@ -48,7 +56,7 @@ const App = {
 			'width': 25 * App.mainsize +'px',
 			'height': 16 * App.mainsize +'px'
 		});
-		App.gamewrapper.append(App.map);
+        App.selector.gamewrapper.append(App.map);
 	},
 	createTiles: function(map) {
 		for (let line = 0; line < map.length; line++) {
@@ -71,9 +79,9 @@ const App = {
 					console.log('Oh no you killed danny');
 					Link.life--;
 					if(Link.life >= 0){
-						App.updateLife();
+						App.removeLife();
 					} else {
-						App.gamewrapper.empty();
+                        App.selector.gamewrapper.empty();
 						App.gameOverAction();
 					}
 					element.stop(true, false).css('left', element.position().left += App.mainsize / 2 );
@@ -90,7 +98,6 @@ const App = {
 
 					$('#monsterKilled').text(Link.monsterKilled);
 					$('#xp').text(Link.experience);
-					console.log($(value))
 					$(value).stop(true, false).remove();
 					element.stop(true, false).remove();
 				}
@@ -101,26 +108,39 @@ const App = {
 			}
 		});
   	},
+
+    /**
+     * Action on levelChange
+     * 1- We fade out the actual map
+     * 2-
+     *
+     * */
 	changeLevel: function(){
 		console.log('Change de level');
-		let linkPos = $('.link').position();
-		console.log($('.monster'));
-		if($('.monster').length >= 0){
-			$.each($('.monster'), function (key, value) {
+
+		const linkGraphic = $('.link');
+		const linkPos = linkGraphic.position();
+		const monster = $('.monster');
+
+		// Supprime les monstres restant pour éviter de perdre des vies
+        // A cause d'une putain de collision qui vient de nulle part
+		if(monster.length >= 0){
+			$.each(monster, function (key, value) {
                 $(value).stop(true, false).remove();
             })
-			console.log('test')
 		}
-		$('.link').remove();
+
 		$('.map').fadeOut(function(){
 			//Get the next level
 			App.indexLevel += 1;
 
 			//Check if there is another level in the world
 			if(App.indexLevel < App.worldLength){
-                App.link.create(linkPos);
+                console.log('Change level');
 
+			    App.link.create(linkPos);
 				App.createBoardGame(App.indexWorld, App.indexLevel);
+                Monster.animateRightAndLeft($('.monster'));
 				$(this).fadeIn();
 				App.map.attr({
 					'id': 'level_'+ App.indexLevel,
@@ -133,8 +153,10 @@ const App = {
 				console.log('Change world');
 				App.indexWorld += 1;
 				App.indexLevel = 0;
+
                 App.link.create(linkPos);
-				App.createBoardGame(App.indexWorld, App.indexLevel);
+                App.createBoardGame(App.indexWorld, App.indexLevel);
+                Monster.animateRightAndLeft($('.monster'));
                 $(this).fadeIn();
 
                 App.map.attr({
@@ -151,11 +173,14 @@ const App = {
 		// Create nav
 		const displayer = $("<nav>");
 		displayer.attr('id', 'displayer');
-        App.gamewrapper.prepend(displayer);
+        App.selector.gamewrapper.prepend(displayer);
 		displayer.append('<button id="menu-btn">Menu</button>');
+
+		// Create la liste des infos
         const listeInfos = $('<ul>');
         listeInfos.attr('id', 'listeInfos');
 		displayer.append(listeInfos);
+
 		// Display level et world
 		let listeInfosHtml = '<li>World - <span id="world-info" class="" >'+ (App.indexWorld + 1) +'</span>';
 		listeInfosHtml += ' Level - <span id="level-info" class="i">'+ (App.indexLevel+1)  +'</span></li>';
@@ -165,7 +190,7 @@ const App = {
         const lifeListeContainer = $('<li>');
         lifeListeContainer.addClass('life-group');
         listeInfos.append(lifeListeContainer);
-		lifeListeContainer.append('<p>------- Life ------</p>');
+        lifeListeContainer.append('<p>------- Life ------</p>');
         let htmlLifeListe = '<ul>';
 		for(let i=0; i<App.link.life; i++){
 			htmlLifeListe += '<li class="life-item">&hearts;</li>';
@@ -180,18 +205,18 @@ const App = {
         listeInfos.append('<li>Monster<span id="monsterKilled" class="item-infos">0</span></li>');
 
     },
-	updateLife: function () {
+	removeLife: function () {
 		// Find the last heart and remove it
 		$('.life-group ul li:last-child').remove();
     },
 	gameOverAction: function(){
 		console.log('T\'es ko, fréro');
-		App.gamewrapper.append('<h1>Game Over</h1>');
-		App.gamewrapper.append('<button class="restart">Recommencer</button>');
-		App.gamewrapper.addClass('game-over');
+        App.selector.gamewrapper.append('<h1>Game Over</h1>');
+        App.selector.gamewrapper.append('<button class="restart">Recommencer</button>');
+        App.selector.gamewrapper.addClass('game-over');
 	},
 	openPauseMenu: function(){
-        App.menuPause.empty().fadeIn();
+        App.selector.menuPause.empty().fadeIn();
 		const menuContent = $('<div>');
 		let menuContentHtml = '<ul>';
 		menuContentHtml += '<li><a href="#" id="close-menu">fermer</a></li>';
@@ -199,14 +224,15 @@ const App = {
 		menuContentHtml += '</ul>';
 		menuContent.html(menuContentHtml);
 
-        App.menuPause.append(menuContent);
+        // Set all activities on off
+        App.selector.menuPause.append(menuContent);
 		$.each($('.monster'), function (key, value) {
 			$(value).stop(true, false);
         });
 		$(window).off('keypress');
 	},
 	closePauseMenu: function () {
-        App.menuPause.fadeOut();
+        App.selector.menuPause.fadeOut();
 		Monster.animationMonster($('.monster'));
 		Link.moves();
     },
@@ -216,8 +242,9 @@ const App = {
 		} else {
 			return false;
 		}
-
-
 	},
+    getRamdomArrayItem: function () {
+        return Math.floor(Math.random() * 4);
+    }
 };
 $(App.init);

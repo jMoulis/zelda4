@@ -11,25 +11,31 @@ const Link = {
 			'right': 100,
 			'up': 122,
 			'down': 115,
-			'arrow': 109
+			'sword': 77
 		};
 		Link.direction = 'up';
 		Link.movesStep = App.mainsize;
+		Link.normalState = {
+		    'right': '-435px -905px',
+            'left': '-70px -905px'
+
+
+        }
 		Link.create(position);
 		Link.moves();
+		Link.swordTogglePosition();
+
 	},
 	create: function(position){
 		Link.link = $('<div>');
 		Link.link.attr({
 			'id': 'link',
-			'class': 'link'
+			'class': 'perso link',
 		}).css({
 			left: position.left,
 			top: position.top
 		});
   		$('.map').append(Link.link);
-
-  		return Link.link;
 	},
     getElement: function (y, x) {
         return $('.tile').filter(function(){
@@ -37,7 +43,6 @@ const Link = {
         });
     },
 	moves: function(){
-		Link.link = $('.link');
 		const linkPos = Link.link.position();
 
 		$(window).on('keypress', function(e){
@@ -47,7 +52,10 @@ const Link = {
 				 /*go right*/
 				 Link.direction = 'right';
 				 if(Link.getElement(linkPos.top, linkPos.left + Link.movesStep).hasClass('allowed')){
-					Link.link.css('left', linkPos.left += Link.movesStep);
+					Link.link.css({
+                        'left': linkPos.left += Link.movesStep,
+                        'background-position': '-435px -905px'
+                    });
 					Link.doorAction(linkPos);
 					Link.stonesAction(linkPos);
 					Link.heartAction(linkPos);
@@ -57,20 +65,23 @@ const Link = {
 					//go left
 					Link.direction = 'left';
 					if(Link.getElement(linkPos.top, linkPos.left - Link.movesStep).hasClass('allowed')){
-						Link.link.css('left', linkPos.left -= Link.movesStep);
-                        Link.doorAction(linkPos);
-                        Link.stonesAction(linkPos);
-                        Link.heartAction(linkPos);
+						Link.link.css({
+                            'left': linkPos.left -= Link.movesStep,
+                            'background-position': '-70px -905px'
+						});
+						Link.doorAction(linkPos);
+						Link.stonesAction(linkPos);
+						Link.heartAction(linkPos);
 					}
 					break;
 				case Link.keys.up:
 					//go up
 					Link.direction = 'up';
 					if(Link.getElement(linkPos.top - Link.movesStep, linkPos.left).hasClass('allowed')){
-						Link.link.css('top', linkPos.top -= Link.movesStep);
+						Link.link.css({'top': linkPos.top -= Link.movesStep, 'background-position': '-20px -970px'});
 						Link.doorAction(linkPos);
-                        Link.stonesAction(linkPos);
-                        Link.heartAction(linkPos);
+						Link.stonesAction(linkPos);
+						Link.heartAction(linkPos);
 					}
 					break;
 
@@ -78,24 +89,53 @@ const Link = {
 					//go down
 					Link.direction = 'down';
 					if(Link.getElement(linkPos.top + Link.movesStep, linkPos.left).hasClass('allowed')){
-						Link.link.css('top', linkPos.top += Link.movesStep);
+						Link.link.css({'top': linkPos.top += Link.movesStep, 'background-position': '-402px -970px'});
 						Link.doorAction(linkPos);
 						Link.stonesAction(linkPos);
 						Link.heartAction(linkPos);
 					}
 					break;
-
-				case Link.keys.arrow:
-					e.keyCode = 0;
-					Weapon.create();
-				break;
-
 				default:
-					console.log('key undefined');
+					//console.log('key undefined');
 				break;
 		  	}
 		});
 	},
+    swordTogglePosition: function(){
+
+        $(document).on('keydown', function(e) {
+            if (e.which === Link.keys.sword) {
+                Weapon.create();
+            }
+        });
+
+        $(document).on('keyup', function(e) {
+            if (e.which === Link.keys.sword) {
+                switch (Link.direction){
+                    case 'right':
+                        Link.link.css({
+                            'background-position': '-435px -905px'
+                        });
+                        break;
+                    case 'left':
+                        Link.link.css({
+                            'background-position': '-70px -905px'
+                        });
+                        break;
+                    case 'up':
+                        Link.link.css({
+                            'background-position': '-20px -970px'
+                        });
+                        break;
+                    case 'down':
+                        Link.link.css({
+                            'background-position': '-402px -970px'
+                        });
+                        break;
+                }
+            }
+        })
+    },
 	stonesAction: function (linkPos) {
         if(Link.getElement(linkPos.top, linkPos.left).hasClass('stone')){
             console.log('You got the stone');
@@ -119,5 +159,6 @@ const Link = {
                 $('.life-group ul').append('<li class="life-item">&hearts;</li>')
 			}
         }
-    }
+    },
+
 };
