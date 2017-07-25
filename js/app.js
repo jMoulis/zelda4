@@ -13,12 +13,12 @@ const App = {
 		App.indexLevel = 0;
 		App.mainsize = 32;
 		App.persoSize = 32;
-        App.linkStartingPos = {left: 128, top:480};
+    App.linkStartingPos = {left: 128, top:480};
 
-        App.selector.mainContainer.on('click', '#menu-btn', App.openPauseMenu);
-        App.selector.mainContainer.on('click', '#close-menu', App.closePauseMenu);
-        App.selector.mainContainer.on('click', '.restart', App.restartAction);
-        App.selector.mainContainer.on('click', '#start', App.loadGame);
+    App.selector.mainContainer.on('click', '#menu-btn', App.openPauseMenu);
+    App.selector.mainContainer.on('click', '#close-menu', App.closePauseMenu);
+    App.selector.mainContainer.on('click', '.restart', App.restartAction);
+    App.selector.mainContainer.on('click', '#start', App.loadGame);
 
 
 	},
@@ -30,8 +30,7 @@ const App = {
 		App.link.init(App.linkStartingPos);
 		App.createBoardGame();
 		App.displayer();
-		Monster.setRandomAnimation();
-		Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
+		Monster.interval = setInterval(Monster.setRandomAnimation, 1500);
 	},
 	createBoardGame: function(){
     	$(App.gamewrapper).attr('data-world', App.indexWorld);
@@ -140,7 +139,6 @@ const App = {
 
 			  App.link.create(linkPos);
 				App.createBoardGame(App.indexWorld, App.indexLevel);
-				Monster.setRandomAnimation();
         Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
 				$(this).fadeIn();
 				App.map.attr({
@@ -157,7 +155,6 @@ const App = {
 
         App.link.create(linkPos);
         App.createBoardGame(App.indexWorld, App.indexLevel);
-				Monster.setRandomAnimation();
         Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
         $(this).fadeIn();
 

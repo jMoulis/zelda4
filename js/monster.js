@@ -9,7 +9,7 @@ const Monster = {
      * add css sprite
      */
     init: function(){
-        Monster.duration = 3000;
+        Monster.duration = 750;
         Monster.distanceMoves = 2;
         Monster.animationConst = {
             duration: Monster.duration,
