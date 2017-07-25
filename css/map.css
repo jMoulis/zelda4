@@ -132,6 +132,7 @@ h1 {
 }
 #btn-control-wrapper .btn-control button {
 	border: none;
+	background-color: gray;
 }
 
 #btn-control-wrapper .row {
