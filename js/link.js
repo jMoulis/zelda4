@@ -47,7 +47,7 @@ const Link = {
 		const linkPos = Link.link.position();
 
 		$(window).on('keypress', function(e){
-    		console.log(e.which);
+    		//console.log(e.which);
 		  	switch(e.which) {
 				case Link.keys.right:
 				 /*go right*/

@@ -24,12 +24,13 @@ const App = {
 	},
 	loadGame: function() {
 		App.selector.gamewrapper.show();
-        App.selector.gameLoader.hide();
+    App.selector.gameLoader.hide();
 		App.createMap();
 		App.link = new Object(Link);
 		App.link.init(App.linkStartingPos);
 		App.createBoardGame();
 		App.displayer();
+		Monster.setRandomAnimation();
 		Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
 	},
 	createBoardGame: function(){
@@ -88,7 +89,7 @@ const App = {
 					element.stop(true, false).css('left', element.position().left += App.mainsize / 2 );
 					$(value).css({
 						'left': $(value).position().left -= App.mainsize / 2,
-                        'background-color': 'red'
+
 					});
 				} else if($(value).hasClass('monster')){
 					console.log('I got you bastard');
@@ -116,8 +117,6 @@ const App = {
      *
      * */
 	changeLevel: function(){
-		console.log('Change de level');
-
 		const linkGraphic = $('.link');
 		const linkPos = linkGraphic.position();
 		const monster = $('.monster');
@@ -137,11 +136,12 @@ const App = {
 
 			//Check if there is another level in the world
 			if(App.indexLevel < App.worldLength){
-                console.log('Change level');
+        console.log('Change level');
 
-			    App.link.create(linkPos);
+			  App.link.create(linkPos);
 				App.createBoardGame(App.indexWorld, App.indexLevel);
-                Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
+				Monster.setRandomAnimation();
+        Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
 				$(this).fadeIn();
 				App.map.attr({
 					'id': 'level_'+ App.indexLevel,
@@ -155,18 +155,19 @@ const App = {
 				App.indexWorld += 1;
 				App.indexLevel = 0;
 
-                App.link.create(linkPos);
-                App.createBoardGame(App.indexWorld, App.indexLevel);
-                Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
-                $(this).fadeIn();
+        App.link.create(linkPos);
+        App.createBoardGame(App.indexWorld, App.indexLevel);
+				Monster.setRandomAnimation();
+        Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
+        $(this).fadeIn();
 
-                App.map.attr({
-                    'id': 'level_'+ App.indexLevel,
-                    'data-level': App.indexLevel,
-                });
+        App.map.attr({
+            'id': 'level_'+ App.indexLevel,
+            'data-level': App.indexLevel,
+        });
 
-                $('#level-info').text(App.indexLevel+1);
-                $('#world-info').text(App.indexWorld+1);
+        $('#level-info').text(App.indexLevel+1);
+        $('#world-info').text(App.indexWorld+1);
 			}
 		}).empty();
 	},
@@ -174,25 +175,25 @@ const App = {
 		// Create nav
 		const displayer = $("<nav>");
 		displayer.attr('id', 'displayer');
-        App.selector.gamewrapper.prepend(displayer);
+    App.selector.gamewrapper.prepend(displayer);
 		displayer.append('<button id="menu-btn">Menu</button>');
 
 		// Create la liste des infos
-        const listeInfos = $('<ul>');
-        listeInfos.attr('id', 'listeInfos');
+    const listeInfos = $('<ul>');
+    listeInfos.attr('id', 'listeInfos');
 		displayer.append(listeInfos);
 
 		// Display level et world
 		let listeInfosHtml = '<li>World - <span id="world-info" class="" >'+ (App.indexWorld + 1) +'</span>';
 		listeInfosHtml += ' Level - <span id="level-info" class="i">'+ (App.indexLevel+1)  +'</span></li>';
-        listeInfos.append(listeInfosHtml);
+    listeInfos.append(listeInfosHtml);
 
 		// Display life
-        const lifeListeContainer = $('<li>');
-        lifeListeContainer.addClass('life-group');
-        listeInfos.append(lifeListeContainer);
-        lifeListeContainer.append('<p>------- Life ------</p>');
-        let htmlLifeListe = '<ul>';
+    const lifeListeContainer = $('<li>');
+    lifeListeContainer.addClass('life-group');
+    listeInfos.append(lifeListeContainer);
+    lifeListeContainer.append('<p>------- Life ------</p>');
+    let htmlLifeListe = '<ul>';
 		for(let i=0; i<App.link.life; i++){
 			htmlLifeListe += '<li class="life-item">&hearts;</li>';
 		}
@@ -234,7 +235,6 @@ const App = {
 	},
 	closePauseMenu: function () {
         App.selector.menuPause.fadeOut();
-		Monster.animationMonster($('.monster'));
 		Link.moves();
     },
 	restartAction: function(){

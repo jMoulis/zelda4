@@ -1,8 +1,21 @@
-.perso {
-	background: url('../images/link_sprite.png') no-repeat;
-	width: 48px;
-	height: 48px;
+body {
+	background-color: gray;
+}
+nav {
+	display: flex;
+	z-index: 2000;
+	height: 100px;
+	width: 800px;
 	position: absolute;
+	padding-top: 30px;
+	align-items: baseline;
+}
+
+h1 {
+	color: white;
+	font-size: 2em;
+	margin: auto 0;
+	top: 250px;
 }
 #game-wrapper {
 	display: none;
@@ -32,23 +45,13 @@
 	font-size: 2em;
 	color: white;
 }
-body {
-	background-color: gray;
-}
-nav {
-	display: flex;
-	z-index: 2000;
-	height: 100px;
-	width: 800px;
-	position: absolute;
-	padding-top: 30px;
-	align-items: baseline;
-}
+
 #listeInfos {
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
 	text-align: center;
+	background-color: rgba(80,80,80, 0.5)
 }
 .life-group ul {
 	display: flex;
@@ -58,41 +61,15 @@ nav {
 .item-infos {
 	display: block;
 }
+.life-item {
+	font-size: 2em;
+}
 .map {
 	/*background: #948d4e;*/
 	position: relative;
 	//margin: auto;
 }
-.link {
-	width: 48px;
-	height: 52px;
-	background-position: -20px -970px;
-}
-.link, .monster, .bigmonster {
-	position: absolute;
-	z-index: 2000;
-}
-.monster {
-	background: url('../images/7584.png') no-repeat;
-	background-position: -185px -90px;
-	width: 44px;
-	height: 52px;
-}
-.bigmonster {
-	background-color: blueviolet;
-}
-.arrow {
-	background-color: chartreuse;
-}
-.heart {
-	background-color: red;
-}
-h1 {
-	color: white;
-	font-size: 2em;
-	margin: auto 0;
-	top: 250px;
-}
+
 #menu-pause {
 	display: none;
 	width: 800px;
@@ -112,4 +89,39 @@ h1 {
 	width: 50%;
 	height: 80%;
 	background-color: gray;
+}
+#menu-btn {
+	position: absolute;
+	top: 0;
+	background-color: gray;
+}
+.perso {
+	background: url('../images/link_sprite.png') no-repeat;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+}
+.link {
+	width: 48px;
+	height: 52px;
+	background-position: -20px -970px;
+}
+.link, .monster, .bigmonster {
+	position: absolute;
+	z-index: 2000;
+}
+.monster {
+	background: url('../images/7584.png') no-repeat;
+	background-position: -185px -90px;
+	width: 44px;
+	height: 52px;
+}
+.arrow {
+	background-color: chartreuse;
+}
+.heart {
+	background: url('../images/divers.png') no-repeat;
+	background-position: -270px -55px;
+	width: 16px;
+	height: 16px;
 }

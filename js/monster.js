@@ -30,11 +30,6 @@ const Monster = {
             Monster.animationLeftAndRight
         ];
     },
-    /*right background-position: -185px -90px;*/
-    /* left -358px -90px*/
-    /*down background-position: -25px -90px;*/
-
-    /*up -563px -90px*/
     animateUpAndDown: function(monster) {
         monster.css('background-position', '-563px -90px')
             .animate({top: '-='+ (App.mainsize * Monster.distanceMoves)},

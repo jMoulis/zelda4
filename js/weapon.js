@@ -4,13 +4,12 @@ const Weapon = {
 		//console.log('Weapon Création');
         Weapon.target = $('.monster');
 		Weapon.weapon = $("<div>");
-		Weapon.weapon.addClass('tile weapon')
+		Weapon.weapon.addClass('weapon')
             .attr('data-x', 'x')
             .attr('data-y', 'y')
             .attr('id', 'weapon_'+ Weapon.id)
             .css('top', Link.link.position().top)
-            .css('left', Link.link.position().left)
-            .css('background-color', 'red');
+            .css('left', Link.link.position().left);
 		App.map.append(Weapon.weapon);
 		Weapon.distance = App.mainsize * 2;
 		Weapon.weaponSize = {

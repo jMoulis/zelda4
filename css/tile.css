@@ -1,5 +1,5 @@
 .tile {
-	background: url('../images/sprite.png') no-repeat green;
+	background: url('../images/sprite.png') no-repeat;
 	width: 32px;
 	height: 32px;
 	position: absolute;
@@ -86,12 +86,10 @@
 
 /* Stone */
 .stone {
-	background-position: -51px -68px;
-	background-color: aqua;
+	background-position: -102px -70px;
 }
 
 /* Door */
 .door {
-	background-color: dodgerblue;
+	background-position: -170px -35px;
 }
-
