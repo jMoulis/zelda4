@@ -13,14 +13,11 @@ const App = {
 		App.indexLevel = 0;
 		App.mainsize = 32;
 		App.persoSize = 32;
-        App.linkStartingPos = {left: 128, top:480};
-
-        App.selector.mainContainer.on('click', '#menu-btn', App.openPauseMenu);
-        App.selector.mainContainer.on('click', '#close-menu', App.closePauseMenu);
-        App.selector.mainContainer.on('click', '.restart', App.restartAction);
-        App.selector.mainContainer.on('click', '#start', App.loadGame);
-
-
+    App.linkStartingPos = {left: 128, top:480};
+    App.selector.mainContainer.on('click', '#menu-btn', App.openPauseMenu);
+    App.selector.mainContainer.on('click', '#close-menu', App.closePauseMenu);
+    App.selector.mainContainer.on('click', '.restart', App.restartAction);
+    App.selector.mainContainer.on('click', '#start', App.loadGame);
 	},
 	loadGame: function() {
 		App.selector.gamewrapper.show();
@@ -46,7 +43,6 @@ const App = {
 				 App.createTiles(stage.map);
 			 });
 		});
-
 	},
 	createMap: function(){
 		App.map = $('<div>');
@@ -83,7 +79,7 @@ const App = {
 					if(Link.life >= 0){
 						App.removeLife();
 					} else {
-                        App.selector.gamewrapper.empty();
+            App.selector.gamewrapper.empty();
 						App.gameOverAction();
 					}
 					element.stop(true, false).css('left', element.position().left += App.mainsize / 2 );
@@ -92,11 +88,11 @@ const App = {
 
 					});
 				} else if($(value).hasClass('monster')){
-					console.log('I got you bastard');
+					console.log('Got ya');
 
-                    Link.points++;
-                    Link.experience++;
-                    Link.monsterKilled++;
+          Link.points++;
+          Link.experience++;
+          Link.monsterKilled++;
 
 					$('#monsterKilled').text(Link.monsterKilled);
 					$('#xp').text(Link.experience);
@@ -126,8 +122,8 @@ const App = {
         // A cause d'une putain de collision qui vient de nulle part
 		if(monster.length >= 0){
 			$.each(monster, function (key, value) {
-                $(value).stop(true, false).remove();
-            })
+        $(value).stop(true, false).remove();
+      )
 		}
 
 		$('.map').fadeOut(function(){
@@ -202,9 +198,9 @@ const App = {
 		// Display experience
 		listeInfos.append('<li >Expérience<span id="xp" class="item-infos">0</span></li>');
 		// Display Stones
-        listeInfos.append('<li>Stones<span id="stones" class="item-infos">0</span></li>');
+    listeInfos.append('<li>Stones<span id="stones" class="item-infos">0</span></li>');
 		// Display Monster
-        listeInfos.append('<li>Monster<span id="monsterKilled" class="item-infos">0</span></li>');
+    listeInfos.append('<li>Monster<span id="monsterKilled" class="item-infos">0</span></li>');
 
     },
 	removeLife: function () {
@@ -212,13 +208,13 @@ const App = {
 		$('.life-group ul li:last-child').remove();
     },
 	gameOverAction: function(){
-		console.log('T\'es ko, fréro');
-        App.selector.gamewrapper.append('<h1>Game Over</h1>');
-        App.selector.gamewrapper.append('<button class="restart">Recommencer</button>');
-        App.selector.gamewrapper.addClass('game-over');
+		console.log('You are dead');
+    App.selector.gamewrapper.append('<h1>Game Over</h1>');
+    App.selector.gamewrapper.append('<button class="restart">Recommencer</button>');
+    App.selector.gamewrapper.addClass('game-over');
 	},
 	openPauseMenu: function(){
-        App.selector.menuPause.empty().fadeIn();
+    App.selector.menuPause.empty().fadeIn();
 		const menuContent = $('<div>');
 		let menuContentHtml = '<ul>';
 		menuContentHtml += '<li><a href="#" id="close-menu">fermer</a></li>';
@@ -227,10 +223,10 @@ const App = {
 		menuContent.html(menuContentHtml);
 
         // Set all activities on off
-        App.selector.menuPause.append(menuContent);
+    App.selector.menuPause.append(menuContent);
 		$.each($('.monster'), function (key, value) {
 			$(value).stop(true, false);
-        });
+    });
 		$(window).off('keypress');
 	},
 	closePauseMenu: function () {
@@ -245,7 +241,7 @@ const App = {
 		}
 	},
     getRamdomArrayItem: function () {
-        return Math.floor(Math.random() * 4);
+      return Math.floor(Math.random() * 4);
     }
 };
 $(App.init);

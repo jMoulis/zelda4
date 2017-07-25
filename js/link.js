@@ -16,12 +16,11 @@ const Link = {
 		Link.direction = 'up';
 		Link.movesStep = App.mainsize;
 		Link.normalState = {
-		    'right': '-435px -905px',
-            'left': '-70px -905px',
+	    'right': '-435px -905px',
+      'left': '-70px -905px',
 			'up': '-20px -970px',
 			'down': '-402px -970px'
-        };
-
+    };
 		Link.create(position);
 		Link.moves();
 		Link.swordTogglePosition();
@@ -39,13 +38,12 @@ const Link = {
   		$('.map').append(Link.link);
 	},
     getElement: function (y, x) {
-        return $('.tile').filter(function(){
-            return $(this).position().top === y && $(this).position().left === x;
-        });
+      return $('.tile').filter(function(){
+        return $(this).position().top === y && $(this).position().left === x;
+      });
     },
 	moves: function(){
 		const linkPos = Link.link.position();
-
 		$(window).on('keypress', function(e){
     		//console.log(e.which);
 		  	switch(e.which) {
@@ -54,9 +52,9 @@ const Link = {
 				 Link.direction = 'right';
 				 if(Link.getElement(linkPos.top, linkPos.left + Link.movesStep).hasClass('allowed')){
 					Link.link.css({
-                        'left': linkPos.left += Link.movesStep,
-                        'background-position': '-435px -905px'
-                    });
+            'left': linkPos.left += Link.movesStep,
+            'background-position': '-435px -905px'
+          });
 					Link.doorAction(linkPos);
 					Link.stonesAction(linkPos);
 					Link.heartAction(linkPos);
@@ -113,26 +111,26 @@ const Link = {
         $(document).on('keyup', function(e) {
             if (e.which === Link.keys.sword) {
                 switch (Link.direction){
-                    case 'right':
-                        Link.link.css({
-                            'background-position': '-435px -905px'
-                        });
-                        break;
-                    case 'left':
-                        Link.link.css({
-                            'background-position': '-70px -905px'
-                        });
-                        break;
-                    case 'up':
-                        Link.link.css({
-                            'background-position': '-20px -970px'
-                        });
-                        break;
-                    case 'down':
-                        Link.link.css({
-                            'background-position': '-402px -970px'
-                        });
-                        break;
+                  case 'right':
+                      Link.link.css({
+                          'background-position': '-435px -905px'
+                      });
+                      break;
+                  case 'left':
+                      Link.link.css({
+                          'background-position': '-70px -905px'
+                      });
+                      break;
+                  case 'up':
+                      Link.link.css({
+                          'background-position': '-20px -970px'
+                      });
+                      break;
+                  case 'down':
+                      Link.link.css({
+                          'background-position': '-402px -970px'
+                      });
+                      break;
                 }
             }
         })
