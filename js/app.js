@@ -216,7 +216,7 @@ const App = {
 		const menuContent = $('<div>');
 		let menuContentHtml = '<ul class="pause-menu-action-wrapper">';
 		menuContentHtml += '<li class="js-close-btn menu-btn"><a href="#" id="close-menu">X</a></li>';
-		menuContentHtml += '<li class="js-restart-btn menu-btn"><a class="" href="#" class="restart">Restart</li>';
+		menuContentHtml += '<li class="js-restart-btn menu-btn"><a href="#" class="restart">Restart</li>';
 		menuContentHtml += '</ul>';
 		menuContent.html(menuContentHtml);
 
@@ -232,11 +232,7 @@ const App = {
 		Link.moves();
     },
 	restartAction: function(){
-		if(confirm('Voulez-vous vraiment quitter?')){
-            document.location.reload(true);
-		} else {
-			return false;
-		}
+		document.location.reload(true);
 	},
     getRamdomArrayItem: function () {
         return Math.floor(Math.random() * 4);
