@@ -1,5 +1,7 @@
+/*GLOBAL RULES*/
 body {
-	background-color: gray;
+	background-color: lightgrey;
+	font-family: sans-serif;
 }
 nav {
 	display: flex;
@@ -17,6 +19,8 @@ h1 {
 	margin: auto 0;
 	top: 250px;
 }
+
+/* GAME WRAPPER RULES*/
 #game-wrapper {
 	display: none;
 	width: 800px;
@@ -45,13 +49,19 @@ h1 {
 	font-size: 2em;
 	color: white;
 }
+.map {
+	position: relative;
+}
 
+/* DISPLAYED ITEMS RULES */
 #listeInfos {
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
 	text-align: center;
-	background-color: rgba(80,80,80, 0.5)
+	background-color: rgba(80,80,80, 0.3);
+    font-family: sans-serif;
+    padding-top: 0.50rem;
 }
 .life-group ul {
 	display: flex;
@@ -60,16 +70,13 @@ h1 {
 }
 .item-infos {
 	display: block;
+    font-size: larger;
 }
 .life-item {
 	font-size: 2em;
 }
-.map {
-	/*background: #948d4e;*/
-	position: relative;
-	//margin: auto;
-}
 
+/*MENU RULES*/
 #menu-pause {
 	display: none;
 	width: 800px;
@@ -77,24 +84,47 @@ h1 {
 	position: absolute;
 	background: rgba(0, 0, 0, 0.7);
 	z-index: 3000;
-	text-align: center;
+}
+.menu-btn {
+    display: block;
+}
+.js-close-btn {
+    text-align: right;
+    margin: 1rem;
+    border-bottom: 1px lightgrey solid;
+    padding-bottom: 1rem;
+}
+.js-restart-btn {
+    text-align: center;
+}
+.pause-menu-action-wrapper {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
 }
 .menu {
 	background-color: transparent;
 	border: none;
 }
 #menu-pause div {
-	padding-top: 60px;
 	margin: 0 auto;
 	width: 50%;
 	height: 80%;
-	background-color: gray;
+	background-color: cadetblue;
 }
 #menu-btn {
 	position: absolute;
-	top: 0;
-	background-color: gray;
+	top: 465px;
+    right: 50px;
+    background-color: cadetblue;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-left: 1rem;
+    border-radius: 0.25rem;
+    color: white;
+    font-weight: bold;
 }
+/* CHARACTERS RULES */
 .perso {
 	background: url('../images/link_sprite.png') no-repeat;
 	width: 48px;
@@ -111,36 +141,26 @@ h1 {
 	z-index: 2000;
 }
 .monster {
-	background: url('../images/7584.png') no-repeat;
-	background-position: -185px -90px;
+	background: url('../images/7584.png') no-repeat -185px -90px;
 	width: 44px;
 	height: 52px;
 }
+
 .arrow {
 	background-color: chartreuse;
 }
+
 .heart {
-	background: url('../images/divers.png') no-repeat;
-	background-position: -270px -55px;
+	background: url('../images/divers.png') no-repeat -270px -55px;
 	width: 16px;
 	height: 16px;
 }
 
-.btn-control, .btn-control button {
-	width: 120px;
-	height: 120px;
+#explications {
+    background-color: aliceblue;
+    width: 800px;
+    padding: 0.5rem;
 }
-#btn-control-wrapper .btn-control button {
-	border: none;
-	background-color: white;
-}
-
-#btn-control-wrapper .row {
-	display: flex;
-}
-#btn-control-wrapper {
-	display: flex;
-	justify-content: space-around;
-	margin-top: 2em;
-	width: 800px;
+#explications ul span {
+    font-weight: bold;
 }

@@ -4,12 +4,12 @@
 "use strict";
 const Monster = {
     /**
-     * TODO: Set random moves to monster
+     *
      * add head turns
      * add css sprite
      */
     init: function(){
-        Monster.duration = 750;
+        Monster.duration = 450;
         Monster.distanceMoves = 2;
         Monster.animationConst = {
             duration: Monster.duration,

@@ -1,9 +1,9 @@
 "use strict";
 const Weapon = {
 	create: function(){
-		//console.log('Weapon Création');
         Weapon.target = $('.monster');
 		Weapon.weapon = $("<div>");
+		Weapon.link = $('.link');
 		Weapon.weapon.addClass('weapon')
             .attr('data-x', 'x')
             .attr('data-y', 'y')
@@ -27,7 +27,7 @@ const Weapon = {
                 linkPos = {
                     left: '+='+ Weapon.distance
                 };
-                $('.link').css({
+                Weapon.link.css({
                    'background-position': '-490px -1480px'
                 });
                 break;
@@ -35,7 +35,7 @@ const Weapon = {
                 linkPos = {
                     left: '-='+ Weapon.distance
                 };
-                $('.link').css({
+                Weapon.link.css({
                     'background-position': '-60px -1462px'
                 });
                 break;
@@ -43,7 +43,7 @@ const Weapon = {
                 linkPos = {
                     top: '-='+ Weapon.distance
                 };
-                $('.link').css({
+                Weapon.link.css({
                     'background-position': '-420px -1395px'
                 });
                 break;
@@ -51,7 +51,7 @@ const Weapon = {
                 linkPos = {
                     top: '+='+ Weapon.distance
                 };
-                $('.link').css({
+                Weapon.link.css({
                     'background-position': '-95px -1370px'
                 });
                 break;
@@ -73,6 +73,6 @@ const Weapon = {
 					weapon.remove();
 				}
 			}
-			);
+        );
 	},
 };

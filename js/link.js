@@ -24,12 +24,6 @@ const Link = {
 		Link.create(position);
 		Link.moves();
 		Link.swordTogglePosition();
-		$('#btn-up').on('click',Link.moveUp);
-		$('#btn-down').on('click', Link.moveDown);
-		$('#btn-right').on('click', Link.moveRight);
-		$('#btn-left').on('click', Link.moveLeft);
-		$('#btn-shoot').on('mousedown', Weapon.create);
-		$('#btn-shoot').on('mouseup', Link.swordUp);
 	},
 	create: function(position){
 		Link.link = $('<div>');
@@ -43,108 +37,72 @@ const Link = {
   		$('.map').append(Link.link);
 	},
     getElement: function (y, x) {
-      return $('.tile').filter(function(){
+        return $('.tile').filter(function(){
         return $(this).position().top === y && $(this).position().left === x;
-      });
+        });
     },
-	moves: function(){
-		Link.linkPos = Link.link.position();
-		$(window).on('keypress', function(e){
-    		//console.log(e.which);
-		  	switch(e.which) {
-				case Link.keys.right:
-				 Link.moveRight(Link.linkPos);
-				 break;
-				case Link.keys.left:
-					//go left
-					Link.moveLeft(Link.linkPos);
-					break;
-				case Link.keys.up:
-					//go up
-					Link.moveUp(Link.linkPos);
-					break;
-
-				case Link.keys.down:
-					//go down
-					Link.moveDown(Link.linkPos);
-					break;
-				default:
-					//console.log('key undefined');
-				break;
-		  	}
-		});
+    moves: function(){
+        Link.linkPos = Link.link.position();
+        $(window).on('keypress', function(e){
+            switch(e.which) {
+                case Link.keys.right:
+                Link.moveRight(Link.linkPos);
+                break;
+                case Link.keys.left:
+                //go left
+                Link.moveLeft(Link.linkPos);
+                break;
+                case Link.keys.up:
+                //go up
+                Link.moveUp(Link.linkPos);
+                break;
+                case Link.keys.down:
+                //go down
+                Link.moveDown(Link.linkPos);
+                break;
+                default:
+                break;
+            }
+        });
 	},
-  swordTogglePosition: function(){
-    $(document).on('keydown', function(e) {
-        if (e.which === Link.keys.sword) {
-            Weapon.create();
-        }
-    });
+    swordTogglePosition: function(){
+        $(document).on('keydown', function(e) {
+            if (e.which === Link.keys.sword) {
+                Weapon.create();
+            }
+        });
 
-    $(document).on('keyup', function(e) {
-      if (e.which === Link.keys.sword) {
-        Link.swordUp();
-      }
-    })
-  },
-	swordUp: function() {
-		switch (Link.direction){
-			case 'right':
-					Link.link.css({
-							'background-position': '-435px -905px'
-					});
-					break;
-			case 'left':
-					Link.link.css({
-							'background-position': '-70px -905px'
-					});
-					break;
-			case 'up':
-					Link.link.css({
-							'background-position': '-20px -970px'
-					});
-					break;
-			case 'down':
-					Link.link.css({
-							'background-position': '-402px -970px'
-					});
-					break;
-		}
-	},
-	movesToggle: function () {
-      $(document).on('keydown', function(e) {
-        if (e.which === Link.keys.sword) {
-            Weapon.create();
-        }
-      });
-
-      $(document).on('keyup', function(e) {
-        if (e.which === Link.keys.sword) {
-          switch (Link.direction){
+            $(document).on('keyup', function(e) {
+                if (e.which === Link.keys.sword) {
+                Link.swordUp();
+            }
+        })
+    },
+    swordUp: function() {
+        switch (Link.direction){
             case 'right':
-                Link.link.css({
-                    'background-position': '-435px -905px'
-                });
-                break;
+            Link.link.css({
+                'background-position': '-435px -905px'
+            });
+            break;
             case 'left':
-                Link.link.css({
-                    'background-position': '-70px -905px'
-                });
-                break;
+            Link.link.css({
+                'background-position': '-70px -905px'
+            });
+            break;
             case 'up':
-                Link.link.css({
-                    'background-position': '-20px -970px'
-                });
-                break;
+            Link.link.css({
+                'background-position': '-20px -970px'
+            });
+            break;
             case 'down':
-                Link.link.css({
-                    'background-position': '-402px -970px'
-                });
-                break;
-          }
+            Link.link.css({
+                'background-position': '-402px -970px'
+            });
+            break;
         }
-      })
     },
+
 	stonesAction: function (linkPos) {
         if(Link.getElement(linkPos.top, linkPos.left).hasClass('stone')){
             console.log('You got the stone');

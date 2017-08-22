@@ -1,18 +1,18 @@
 "use strict";
 const tile = {
-  create: function(line, column, map) {
+	create: function(line, column, map) {
 		tile.tile = $('<div>');
 		tile.tile
-		.addClass(tile.getClasses(line, column, map))
-		.css(tile.getStyle(line, column))
-		.attr('data-line', line).attr('data-column', column);
+			.addClass(tile.getClasses(line, column, map))
+			.css(tile.getStyle(line, column))
+			.attr('data-line', line).attr('data-column', column);
 		App.map.append(tile.tile);
-  },
+	},
 
-  getClasses: function(column, line, map) {
-    let classes = 'tile '+ tile.getType(map, column, line).name +' '+tile.getType(map, column, line).perm ;
-    classes += ' ';
-    // top
+	getClasses: function(column, line, map) {
+		let classes = 'tile '+ tile.getType(map, column, line).name +' '+tile.getType(map, column, line).perm ;
+		classes += ' ';
+		// top
 		if(line > 0){
 			classes += ' top-'+ tile.getType(map, column, line-1).name;
 		}
@@ -31,23 +31,22 @@ const tile = {
 		} else {
 			classes += ' no-left';
 		}
-    return classes;
-  },
+		return classes;
+	},
 
-  getStyle: function(column, line) {
-	return {
-        left: column * App.mainsize,
-        top: line * App.mainsize
-    };
-  },
+	getStyle: function(column, line) {
+		return {
+			left: column * App.mainsize,
+			top: line * App.mainsize
+		};
+	},
 
-  getType: function(map, column, line) {
-  	let char =	map[line][column];
-	let arrayTile = [];
-	// Valeur fixe!! Les types seront toujours premier dans l'objet
+	getType: function(map, column, line) {
+		let char =	map[line][column];
+		let arrayTile = [];
 		$.each(Games[0].types, function(key, value){
 			arrayTile[value.sign] = { name: value.name, perm: value.permission};
 		});
-	return arrayTile[char];
-  },
-};
+			return arrayTile[char];
+		},
+	};

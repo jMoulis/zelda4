@@ -13,24 +13,24 @@ const App = {
 		App.indexLevel = 0;
 		App.mainsize = 32;
 		App.persoSize = 32;
-    App.linkStartingPos = {left: 128, top:480};
-
-    App.selector.mainContainer.on('click', '#menu-btn', App.openPauseMenu);
-    App.selector.mainContainer.on('click', '#close-menu', App.closePauseMenu);
-    App.selector.mainContainer.on('click', '.restart', App.restartAction);
-    App.selector.mainContainer.on('click', '#start', App.loadGame);
+		App.linkStartingPos = {left: 128, top:480};
+		App.intervalDuration = 900;
+		App.selector.mainContainer.on('click', '#menu-btn', App.openPauseMenu);
+		App.selector.mainContainer.on('click', '#close-menu', App.closePauseMenu);
+		App.selector.mainContainer.on('click', '.restart', App.restartAction);
+		App.selector.mainContainer.on('click', '#start', App.loadGame);
 
 
 	},
 	loadGame: function() {
 		App.selector.gamewrapper.show();
-    App.selector.gameLoader.hide();
+    	App.selector.gameLoader.hide();
 		App.createMap();
 		App.link = new Object(Link);
 		App.link.init(App.linkStartingPos);
 		App.createBoardGame();
 		App.displayer();
-		Monster.interval = setInterval(Monster.setRandomAnimation, 1500);
+		Monster.interval = setInterval(Monster.setRandomAnimation, App.intervalDuration);
 	},
 	createBoardGame: function(){
     	$(App.gamewrapper).attr('data-world', App.indexWorld);
@@ -78,6 +78,7 @@ const App = {
 			if(collision){
 				if($(value).hasClass('link')) {
 					console.log('Oh no you killed danny');
+
 					Link.life--;
 					if(Link.life >= 0){
 						App.removeLife();
@@ -91,7 +92,7 @@ const App = {
 
 					});
 				} else if($(value).hasClass('monster')){
-					console.log('I got you bastard');
+					console.log('I got you');
 
                     Link.points++;
                     Link.experience++;
@@ -103,7 +104,7 @@ const App = {
 					element.stop(true, false).remove();
 				}
 				if($(value).hasClass('forbidden')){
-					console.log('Forbidden');
+
 					element.stop(true, false);
 				}
 			}
@@ -121,8 +122,6 @@ const App = {
 		const monster = $('.monster');
 		clearInterval(Monster.interval);
 
-		// Supprime les monstres restant pour éviter de perdre des vies
-        // A cause d'une putain de collision qui vient de nulle part
 		if(monster.length >= 0){
 			$.each(monster, function (key, value) {
                 $(value).stop(true, false).remove();
@@ -135,11 +134,10 @@ const App = {
 
 			//Check if there is another level in the world
 			if(App.indexLevel < App.worldLength){
-        console.log('Change level');
-
-			  App.link.create(linkPos);
+        		console.log('Change level');
+				App.link.create(linkPos);
 				App.createBoardGame(App.indexWorld, App.indexLevel);
-        Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
+				Monster.interval = setInterval(Monster.setRandomAnimation, App.intervalDuration);
 				$(this).fadeIn();
 				App.map.attr({
 					'id': 'level_'+ App.indexLevel,
@@ -152,19 +150,18 @@ const App = {
 				console.log('Change world');
 				App.indexWorld += 1;
 				App.indexLevel = 0;
+				App.link.create(linkPos);
+				App.createBoardGame(App.indexWorld, App.indexLevel);
+				Monster.interval = setInterval(Monster.setRandomAnimation, App.intervalDuration);
+				$(this).fadeIn();
 
-        App.link.create(linkPos);
-        App.createBoardGame(App.indexWorld, App.indexLevel);
-        Monster.interval = setInterval(Monster.setRandomAnimation, 6000);
-        $(this).fadeIn();
+				App.map.attr({
+					'id': 'level_'+ App.indexLevel,
+					'data-level': App.indexLevel,
+				});
 
-        App.map.attr({
-            'id': 'level_'+ App.indexLevel,
-            'data-level': App.indexLevel,
-        });
-
-        $('#level-info').text(App.indexLevel+1);
-        $('#world-info').text(App.indexWorld+1);
+				$('#level-info').text(App.indexLevel+1);
+				$('#world-info').text(App.indexWorld+1);
 			}
 		}).empty();
 	},
@@ -172,36 +169,36 @@ const App = {
 		// Create nav
 		const displayer = $("<nav>");
 		displayer.attr('id', 'displayer');
-    App.selector.gamewrapper.prepend(displayer);
+    	App.selector.gamewrapper.prepend(displayer);
 		displayer.append('<button id="menu-btn">Menu</button>');
 
 		// Create la liste des infos
-    const listeInfos = $('<ul>');
-    listeInfos.attr('id', 'listeInfos');
+		const listeInfos = $('<ul>');
+		listeInfos.attr('id', 'listeInfos');
 		displayer.append(listeInfos);
 
-		// Display level et world
+			// Display level et world
 		let listeInfosHtml = '<li>World - <span id="world-info" class="" >'+ (App.indexWorld + 1) +'</span>';
 		listeInfosHtml += ' Level - <span id="level-info" class="i">'+ (App.indexLevel+1)  +'</span></li>';
-    listeInfos.append(listeInfosHtml);
+		listeInfos.append(listeInfosHtml);
 
-		// Display life
-    const lifeListeContainer = $('<li>');
-    lifeListeContainer.addClass('life-group');
-    listeInfos.append(lifeListeContainer);
-    lifeListeContainer.append('<p>------- Life ------</p>');
-    let htmlLifeListe = '<ul>';
+			// Display life
+		const lifeListeContainer = $('<li>');
+		lifeListeContainer.addClass('life-group');
+		listeInfos.append(lifeListeContainer);
+		lifeListeContainer.append('<p>------- Life ------</p>');
+		let htmlLifeListe = '<ul>';
 		for(let i=0; i<App.link.life; i++){
 			htmlLifeListe += '<li class="life-item">&hearts;</li>';
 		}
 		htmlLifeListe += '</ul>';
 		lifeListeContainer.append(htmlLifeListe);
 		// Display experience
-		listeInfos.append('<li >Expérience<span id="xp" class="item-infos">0</span></li>');
+		listeInfos.append('<li >XP<span id="xp" class="item-infos">0</span></li>');
 		// Display Stones
         listeInfos.append('<li>Stones<span id="stones" class="item-infos">0</span></li>');
 		// Display Monster
-        listeInfos.append('<li>Monster<span id="monsterKilled" class="item-infos">0</span></li>');
+        listeInfos.append('<li>Monster killed<span id="monsterKilled" class="item-infos">0</span></li>');
 
     },
 	removeLife: function () {
@@ -211,15 +208,15 @@ const App = {
 	gameOverAction: function(){
 		console.log('T\'es ko, fréro');
         App.selector.gamewrapper.append('<h1>Game Over</h1>');
-        App.selector.gamewrapper.append('<button class="restart">Recommencer</button>');
+        App.selector.gamewrapper.append('<button class="restart">Restart</button>');
         App.selector.gamewrapper.addClass('game-over');
 	},
 	openPauseMenu: function(){
         App.selector.menuPause.empty().fadeIn();
 		const menuContent = $('<div>');
-		let menuContentHtml = '<ul>';
-		menuContentHtml += '<li><a href="#" id="close-menu">fermer</a></li>';
-		menuContentHtml += '<li><a href="#" class="restart">Redémarrer</li>';
+		let menuContentHtml = '<ul class="pause-menu-action-wrapper">';
+		menuContentHtml += '<li class="js-close-btn menu-btn"><a href="#" id="close-menu">X</a></li>';
+		menuContentHtml += '<li class="js-restart-btn menu-btn"><a class="" href="#" class="restart">Restart</li>';
 		menuContentHtml += '</ul>';
 		menuContent.html(menuContentHtml);
 
